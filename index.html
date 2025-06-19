@@ -28,11 +28,20 @@
     <section id="parent" class="tab-panel hidden">
       <div class="bg-white rounded-3xl shadow-xl p-6 space-y-6">
         <h2 class="text-lg font-semibold text-center">Parent</h2>
-        <!-- Invite link -->
-        <div class="flex items-center gap-2 text-sm">
+        
+        <!-- Invite Guests Button -->
+        <button onclick="openInviteModal()" class="w-full py-3 rounded-xl bg-[var(--blue)] text-white font-medium flex items-center justify-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+          </svg>
+          Invite Guests
+        </button>
+
+        <!-- Invite link explain that this can be sent directly  to the guest -->
+        <!-- <div class="flex items-center gap-2 text-sm">
           <input id="inviteLink" readonly value="https://party.ly/jackson-6-9" class="flex-1 border rounded-lg px-2 py-1 text-xs bg-[var(--gray)]"/>
           <button id="copyLink" class="px-3 py-1 rounded-lg bg-[var(--blue)] text-white text-xs">Copy</button>
-        </div>
+        </div> -->
         <!-- Progress bar -->
         <p class="text-sm font-medium">Planning progress</p>
         <div class="w-full h-2 rounded-full bg-[var(--orange-light)]">
@@ -63,6 +72,37 @@
         <!-- Balance -->
         <div class="flex justify-between text-sm font-medium"><span>Total Due</span><span>$50.00</span></div>
         <button class="w-full py-2 rounded-xl bg-[var(--orange)] text-white">Pay balance</button>
+      </div>
+
+      <!-- Invite Modal -->
+      <div id="inviteModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-2xl w-full max-w-md mx-4">
+          <div class="p-6 space-y-6">
+            <div class="flex justify-between items-center">
+              <h3 class="text-lg font-semibold">Invite Guests</h3>
+              <button onclick="closeInviteModal()" class="text-gray-400 hover:text-gray-600">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+              </button>
+            </div>
+
+            <!-- Guest List -->
+            <div id="guestList" class="space-y-4">
+              <!-- Guest entries will be added here -->
+            </div>
+
+            <!-- Add Guest Button -->
+            <button onclick="addGuestEntry()" class="w-full py-2 rounded-xl border-2 border-dashed border-gray-300 text-gray-500 hover:border-[var(--blue)] hover:text-[var(--blue)] transition-colors">
+              + Add Another Guest
+            </button>
+
+            <!-- Send Invites Button -->
+            <button onclick="sendInvites()" class="w-full py-2 rounded-xl bg-[var(--orange)] text-white font-medium">
+              Send Invites
+            </button>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -369,6 +409,81 @@
     document.getElementById('rsvpModal').addEventListener('click', (e) => {
       if (e.target === document.getElementById('rsvpModal')) {
         closeRSVPModal();
+      }
+    });
+
+    // Invite Modal Functionality
+    function openInviteModal() {
+      document.getElementById('inviteModal').classList.remove('hidden');
+      if (document.querySelectorAll('.guest-entry').length === 0) {
+        addGuestEntry(); // Add first entry automatically
+      }
+    }
+
+    function closeInviteModal() {
+      document.getElementById('inviteModal').classList.add('hidden');
+    }
+
+    function addGuestEntry() {
+      const guestList = document.getElementById('guestList');
+      const entryId = Date.now(); // Unique ID for the entry
+      
+      const entry = document.createElement('div');
+      entry.className = 'guest-entry bg-[var(--gray)] rounded-xl p-4 relative';
+      entry.innerHTML = `
+        <button onclick="removeGuestEntry(${entryId})" class="absolute right-2 top-2 text-gray-400 hover:text-gray-600">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+        <div class="space-y-3">
+          <input type="text" placeholder="Guest Name" class="w-full border rounded-lg px-3 py-2 text-sm" />
+          <div class="grid grid-cols-7 gap-2 items-center">
+            <input type="email" placeholder="Email" class="col-span-3 border rounded-lg px-3 py-2 text-sm" />
+            <div class="text-center text-sm text-gray-400">or</div>
+            <input type="tel" placeholder="Phone" class="col-span-3 border rounded-lg px-3 py-2 text-sm" />
+          </div>
+        </div>
+      `;
+      
+      guestList.appendChild(entry);
+    }
+
+    function removeGuestEntry(entryId) {
+      const entry = document.querySelector(`.guest-entry button[onclick="removeGuestEntry(${entryId})"]`).parentNode;
+      entry.remove();
+    }
+
+    function sendInvites() {
+      const entries = document.querySelectorAll('.guest-entry');
+      const guests = Array.from(entries).map(entry => {
+        return {
+          name: entry.querySelector('input[type="text"]').value,
+          email: entry.querySelector('input[type="email"]').value,
+          phone: entry.querySelector('input[type="tel"]').value
+        };
+      });
+      
+      // Here you would typically send this data to your backend
+      console.log('Sending invites to:', guests);
+      
+      // Show success message
+      const successMsg = document.createElement('div');
+      successMsg.className = 'fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg';
+      successMsg.textContent = 'Invites sent successfully!';
+      document.body.appendChild(successMsg);
+      
+      // Remove success message after 3 seconds
+      setTimeout(() => {
+        successMsg.remove();
+        closeInviteModal();
+      }, 3000);
+    }
+
+    // Close modal when clicking outside
+    document.getElementById('inviteModal').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('inviteModal')) {
+        closeInviteModal();
       }
     });
   </script>
