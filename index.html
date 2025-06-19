@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RSVP Flow — v3</title>
+  <title>RSVP Flow — v3</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
@@ -14,7 +14,7 @@
   </style>
 </head>
 <body class="bg-[var(--peach)] min-h-screen flex flex-col items-center py-12">
-  <h1 class="text-3xl font-bold mb-6">RSVP Prototype (v1.0)</h1>
+  <h1 class="text-3xl font-bold mb-6">RSVP Prototype (v1.0)</h1>
 
   <!-- TABS -->
   <div class="flex gap-4 mb-8">
@@ -169,10 +169,92 @@
               </button>
             </div>
 
+            <!-- Contact Import Button -->
+            <div id="contactPickerContainer" class="mb-4">
+              <button onclick="pickContacts()" class="w-full py-2 rounded-xl border-2 border-[var(--blue)] text-[var(--blue)] hover:bg-blue-50 transition-colors flex items-center justify-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                </svg>
+                Import from Contacts
+              </button>
+            </div>
+
             <!-- Guest List -->
             <div id="guestList" class="space-y-4">
               <!-- Guest entries will be added here -->
             </div>
+
+            <script>
+              async function pickContacts() {
+                // Check if the Contact Picker API is supported
+                if ('contacts' in navigator && 'ContactsManager' in window) {
+                  try {
+                    const properties = ['name', 'email', 'tel'];
+                    const opts = {multiple: true};
+                    
+                    const contacts = await navigator.contacts.select(properties, opts);
+                    
+                    contacts.forEach(contact => {
+                      // Create a new guest entry for each selected contact
+                      const guestList = document.getElementById('guestList');
+                      const entryId = Date.now() + Math.random(); // Unique ID
+                      
+                      const entry = document.createElement('div');
+                      entry.className = 'guest-entry bg-[var(--gray)] rounded-xl p-4 relative';
+                      
+                      const name = contact.name?.[0] || '';
+                      const email = contact.email?.[0] || '';
+                      const phone = contact.tel?.[0] || '';
+                      
+                      entry.innerHTML = `
+                        <button onclick="removeGuestEntry(${entryId})" class="absolute right-2 top-2 text-gray-400 hover:text-gray-600">
+                          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                          </svg>
+                        </button>
+                        <div class="space-y-3">
+                          <input type="text" placeholder="Guest Name" value="${name}" class="w-full border rounded-lg px-3 py-2 text-sm" />
+                          <div class="grid grid-cols-7 gap-2 items-center">
+                            <input type="email" placeholder="Email" value="${email}" class="col-span-3 border rounded-lg px-3 py-2 text-sm" />
+                            <div class="text-center text-sm text-gray-400">or</div>
+                            <input type="tel" placeholder="Phone" value="${phone}" class="col-span-3 border rounded-lg px-3 py-2 text-sm" />
+                          </div>
+                        </div>
+                      `;
+                      
+                      guestList.appendChild(entry);
+                    });
+                    
+                    // Show success message if contacts were imported
+                    if (contacts.length > 0) {
+                      const toast = document.createElement('div');
+                      toast.className = 'fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg animate-fade-in';
+                      toast.textContent = `${contacts.length} contact${contacts.length === 1 ? '' : 's'} imported`;
+                      document.body.appendChild(toast);
+                      setTimeout(() => toast.remove(), 3000);
+                    }
+                  } catch (error) {
+                    console.error('Error picking contacts:', error);
+                    // Show error message
+                    const toast = document.createElement('div');
+                    toast.className = 'fixed top-4 right-4 bg-red-500 text-white px-4 py-2 rounded-lg shadow-lg animate-fade-in';
+                    toast.textContent = 'Could not access contacts. Please add manually.';
+                    document.body.appendChild(toast);
+                    setTimeout(() => toast.remove(), 3000);
+                  }
+                } else {
+                  // Hide the contact picker button if not supported
+                  document.getElementById('contactPickerContainer').style.display = 'none';
+                }
+              }
+
+              // Check contact picker support on page load
+              document.addEventListener('DOMContentLoaded', () => {
+                if (!('contacts' in navigator && 'ContactsManager' in window)) {
+                  document.getElementById('contactPickerContainer').style.display = 'none';
+                }
+              });
+            </script>
 
             <!-- Add Guest Button -->
             <button onclick="addGuestEntry()" class="w-full py-2 rounded-xl border-2 border-dashed border-gray-300 text-gray-500 hover:border-[var(--blue)] hover:text-[var(--blue)] transition-colors">
