@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <style>
     :root{--peach:#fff7f4;--orange:#f8a88e;--orange-light:#fad2c3;--blue:#7bb6ff;--green:#8cd9a2;--gray:#f3f4f6;}
     body{font-family:'Inter',sans-serif;}
@@ -215,9 +216,9 @@
 
         <div class="space-y-3 text-sm">
           <div class="flex gap-3">
-            <button onclick="openRSVPModal('yes')" class="flex-1 py-2 rounded-xl bg-[var(--blue)] text-white">Yes</button>
-            <button onclick="openRSVPModal('maybe')" class="flex-1 py-2 rounded-xl bg-yellow-500 text-white">Maybe</button>
-            <button onclick="openRSVPModal('no')" class="flex-1 py-2 rounded-xl bg-red-400 text-white">No</button>
+            <button onclick="handleRSVPResponse('yes')" class="flex-1 py-2 rounded-xl bg-[var(--blue)] text-white">Yes</button>
+            <button onclick="handleRSVPResponse('maybe')" class="flex-1 py-2 rounded-xl bg-yellow-500 text-white">Maybe</button>
+            <button onclick="handleRSVPResponse('no')" class="flex-1 py-2 rounded-xl bg-red-400 text-white">No</button>
           </div>
         </div>
       </div>
@@ -1300,6 +1301,51 @@
       }
     `;
     document.head.appendChild(style);
+
+    function handleRSVPResponse(response) {
+      if (response === 'yes') {
+        // Trigger confetti with a festive pattern
+        const end = Date.now() + (3 * 1000); // 3 seconds of confetti
+
+        // Launch confetti from both sides
+        const colors = ['#ff0000', '#ffa500', '#ffff00', '#00ff00', '#0000ff', '#4b0082', '#8f00ff'];
+        
+        (function frame() {
+          confetti({
+            particleCount: 7,
+            angle: 60,
+            spread: 55,
+            origin: { x: 0 },
+            colors: colors
+          });
+          
+          confetti({
+            particleCount: 7,
+            angle: 120,
+            spread: 55,
+            origin: { x: 1 },
+            colors: colors
+          });
+
+          if (Date.now() < end) {
+            requestAnimationFrame(frame);
+          }
+        }());
+
+        // Add some finale bursts after 2 seconds
+        setTimeout(() => {
+          confetti({
+            particleCount: 100,
+            spread: 70,
+            origin: { y: 0.6 },
+            colors: colors
+          });
+        }, 2000);
+      }
+      
+      // Open the modal and handle the response
+      openRSVPModal(response);
+    }
   </script>
 </body>
 </html>
