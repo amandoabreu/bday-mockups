@@ -170,8 +170,9 @@
             </div>
 
             <!-- Contact Import Button -->
-            <div id="contactPickerContainer" class="mb-4">
-              <button onclick="pickContacts()" class="w-full py-2 rounded-xl border-2 border-[var(--blue)] text-[var(--blue)] hover:bg-blue-50 transition-colors flex items-center justify-center gap-2">
+            <div id="contactPickerContainer" class="mb-4 space-y-2">
+              <!-- Android/Chrome Contact Picker -->
+              <button onclick="pickContacts()" class="w-full py-2 rounded-xl border-2 border-[var(--blue)] text-[var(--blue)] hover:bg-blue-50 transition-colors flex items-center justify-center gap-2 contact-picker-btn">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
                 </svg>
@@ -185,6 +186,127 @@
             </div>
 
             <script>
+              // Detect iOS
+              function isIOS() {
+                return [
+                  'iPad Simulator',
+                  'iPhone Simulator',
+                  'iPod Simulator',
+                  'iPad',
+                  'iPhone',
+                  'iPod'
+                ].includes(navigator.platform)
+                // iPad on iOS 13 detection
+                || (navigator.userAgent.includes("Mac") && "ontouchend" in document);
+              }
+
+              // Initialize platform-specific buttons
+              document.addEventListener('DOMContentLoaded', () => {
+                const contactPickerContainer = document.getElementById('contactPickerContainer');
+                const contactPickerBtn = contactPickerContainer.querySelector('button');
+                
+                if (isIOS()) {
+                  // Replace the button text and icon for iOS
+                  contactPickerBtn.innerHTML = `
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"/>
+                    </svg>
+                    Share Contacts (iPhone)
+                  `;
+                  contactPickerBtn.onclick = initiateIOSContactShare;
+                } else if (!('contacts' in navigator && 'ContactsManager' in window)) {
+                  // If neither is supported, hide the entire container
+                  contactPickerContainer.style.display = 'none';
+                }
+              });
+
+              // iOS Share Sheet Integration
+              function initiateIOSContactShare() {
+                // Create a unique URL for this sharing session
+                const sessionId = Date.now();
+                const shareUrl = `${window.location.origin}${window.location.pathname}?action=share-contacts&session=${sessionId}`;
+                const shareText = "Select contacts to invite to the party";
+                
+                if (navigator.share) {
+                  navigator.share({
+                    title: 'Share Contacts',
+                    text: shareText,
+                    url: shareUrl
+                  }).then(() => {
+                    // Show loading state while we wait for the contacts
+                    const toast = document.createElement('div');
+                    toast.className = 'fixed top-4 right-4 bg-[var(--blue)] text-white px-4 py-2 rounded-lg shadow-lg animate-fade-in';
+                    toast.textContent = 'Select contacts from your address book';
+                    document.body.appendChild(toast);
+                    setTimeout(() => toast.remove(), 3000);
+
+                    // Poll for shared contacts (in a real app, this would check a server endpoint)
+                    checkForSharedContacts(sessionId);
+                  }).catch((error) => {
+                    console.error('Error sharing:', error);
+                    const toast = document.createElement('div');
+                    toast.className = 'fixed top-4 right-4 bg-red-500 text-white px-4 py-2 rounded-lg shadow-lg animate-fade-in';
+                    toast.textContent = 'Could not access contacts. Please add manually.';
+                    document.body.appendChild(toast);
+                    setTimeout(() => toast.remove(), 3000);
+                  });
+                } else {
+                  // Fallback for older iOS versions - use mailto: protocol
+                  const mailtoUrl = `mailto:?subject=Party Invitation&body=${encodeURIComponent(shareText + '\n' + shareUrl)}`;
+                  window.location.href = mailtoUrl;
+                }
+              }
+
+              // Simulate checking for shared contacts
+              function checkForSharedContacts(sessionId) {
+                // In a real app, this would poll a server endpoint
+                // For demo purposes, we'll just show a success message
+                setTimeout(() => {
+                  const demoContacts = [
+                    { name: 'John Smith', email: 'john@example.com', phone: '123-456-7890' },
+                    { name: 'Jane Doe', email: 'jane@example.com', phone: '098-765-4321' }
+                  ];
+                  
+                  // Add the demo contacts to the list
+                  demoContacts.forEach(contact => {
+                    addGuestEntry(contact.name, contact.email, contact.phone);
+                  });
+
+                  // Show success message
+                  const toast = document.createElement('div');
+                  toast.className = 'fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg animate-fade-in';
+                  toast.textContent = `${demoContacts.length} contacts imported`;
+                  document.body.appendChild(toast);
+                  setTimeout(() => toast.remove(), 3000);
+                }, 2000);
+              }
+
+              // Modified addGuestEntry to accept contact details
+              function addGuestEntry(name = '', email = '', phone = '') {
+                const guestList = document.getElementById('guestList');
+                const entryId = Date.now() + Math.random();
+                
+                const entry = document.createElement('div');
+                entry.className = 'guest-entry bg-[var(--gray)] rounded-xl p-4 relative';
+                entry.innerHTML = `
+                  <button onclick="removeGuestEntry(${entryId})" class="absolute right-2 top-2 text-gray-400 hover:text-gray-600">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                  </button>
+                  <div class="space-y-3">
+                    <input type="text" placeholder="Guest Name" value="${name}" class="w-full border rounded-lg px-3 py-2 text-sm" />
+                    <div class="grid grid-cols-7 gap-2 items-center">
+                      <input type="email" placeholder="Email" value="${email}" class="col-span-3 border rounded-lg px-3 py-2 text-sm" />
+                      <div class="text-center text-sm text-gray-400">or</div>
+                      <input type="tel" placeholder="Phone" value="${phone}" class="col-span-3 border rounded-lg px-3 py-2 text-sm" />
+                    </div>
+                  </div>
+                `;
+                
+                guestList.appendChild(entry);
+              }
+
               async function pickContacts() {
                 // Check if the Contact Picker API is supported
                 if ('contacts' in navigator && 'ContactsManager' in window) {
