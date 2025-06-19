@@ -402,12 +402,12 @@
         <!-- Staff Chat & Coordination -->
         <div class="grid grid-cols-3 gap-4 mb-6">
           <!-- Chat Panel -->
-          <div class="col-span-2 border rounded-xl p-4">
+          <div id="staffChat" class="col-span-2 border rounded-xl p-4">
             <div class="flex justify-between items-center mb-4">
               <h3 class="font-medium">Staff Chat</h3>
               <button class="text-sm text-[var(--blue)]">Open Photos</button>
             </div>
-            <div class="h-64 overflow-y-auto space-y-3 mb-4 border-y py-4">
+            <div class="messages h-64 overflow-y-auto space-y-3 mb-4 border-y py-4">
               <!-- Chat messages -->
               <div class="flex gap-3">
                 <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
@@ -421,7 +421,6 @@
                   <p class="text-sm text-gray-600">Setup complete for Jackson's party. Extra decorations in place.</p>
                 </div>
               </div>
-              <!-- More messages... -->
             </div>
             <div class="flex gap-2">
               <input type="text" placeholder="Type a message..." class="flex-1 border rounded-lg px-3 py-2 text-sm">
@@ -430,28 +429,28 @@
           </div>
 
           <!-- Quick Export Tools -->
-          <div class="border rounded-xl p-4">
+          <div id="exportTools" class="border rounded-xl p-4">
             <h3 class="font-medium mb-4">Export Tools</h3>
             <div class="space-y-3">
-              <button class="w-full flex items-center gap-2 px-4 py-2 border rounded-lg text-sm hover:bg-gray-50">
+              <button data-type="revenue" class="w-full flex items-center gap-2 px-4 py-2 border rounded-lg text-sm hover:bg-gray-50">
                 <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                 </svg>
                 Revenue Report (CSV)
               </button>
-              <button class="w-full flex items-center gap-2 px-4 py-2 border rounded-lg text-sm hover:bg-gray-50">
+              <button data-type="quickbooks" class="w-full flex items-center gap-2 px-4 py-2 border rounded-lg text-sm hover:bg-gray-50">
                 <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                 </svg>
                 QuickBooks Export
               </button>
-              <button class="w-full flex items-center gap-2 px-4 py-2 border rounded-lg text-sm hover:bg-gray-50">
+              <button data-type="calendar" class="w-full flex items-center gap-2 px-4 py-2 border rounded-lg text-sm hover:bg-gray-50">
                 <svg class="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                 </svg>
                 Calendar Export
               </button>
-              <button class="w-full flex items-center gap-2 px-4 py-2 border rounded-lg text-sm hover:bg-gray-50">
+              <button data-type="tax" class="w-full flex items-center gap-2 px-4 py-2 border rounded-lg text-sm hover:bg-gray-50">
                 <svg class="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                 </svg>
@@ -491,23 +490,23 @@
             <div class="text-center text-sm text-gray-500 py-2">Sun</div>
             
             <!-- Calendar days -->
-            <div class="border rounded-lg p-2 min-h-[100px] bg-green-50" draggable="true">
+            <div id="day1" class="calendar-day border rounded-lg p-2 min-h-[100px] bg-green-50" draggable="true">
               <div class="text-sm font-medium">1</div>
-              <div class="mt-2 space-y-1">
-                <div class="text-xs px-1 py-0.5 rounded bg-green-500 text-white">10:00 AM</div>
-                <div class="text-xs px-1 py-0.5 rounded bg-green-500 text-white">2:00 PM</div>
+              <div class="time-slots mt-2 space-y-1">
+                <div class="time-slot text-xs px-1 py-0.5 rounded bg-green-500 text-white">10:00 AM</div>
+                <div class="time-slot text-xs px-1 py-0.5 rounded bg-green-500 text-white">2:00 PM</div>
               </div>
             </div>
-            <div class="border rounded-lg p-2 min-h-[100px] bg-yellow-50" draggable="true">
+            <div id="day2" class="calendar-day border rounded-lg p-2 min-h-[100px] bg-yellow-50" draggable="true">
               <div class="text-sm font-medium">2</div>
-              <div class="mt-2 space-y-1">
-                <div class="text-xs px-1 py-0.5 rounded bg-yellow-500 text-white">1:00 PM</div>
+              <div class="time-slots mt-2 space-y-1">
+                <div class="time-slot text-xs px-1 py-0.5 rounded bg-yellow-500 text-white">1:00 PM</div>
               </div>
             </div>
-            <div class="border rounded-lg p-2 min-h-[100px] bg-red-50" draggable="true">
+            <div id="day3" class="calendar-day border rounded-lg p-2 min-h-[100px] bg-red-50" draggable="true">
               <div class="text-sm font-medium">3</div>
-              <div class="mt-2 space-y-1">
-                <div class="text-xs px-1 py-0.5 rounded bg-red-500 text-white">All Booked</div>
+              <div class="time-slots mt-2 space-y-1">
+                <div class="time-slot text-xs px-1 py-0.5 rounded bg-red-500 text-white">All Booked</div>
               </div>
             </div>
             <!-- More days... -->
@@ -520,11 +519,11 @@
           <div class="font-medium text-gray-500 mb-2">Today</div>
           <div class="grid gap-4">
             <!-- Party Card -->
-            <div class="border rounded-xl p-4 hover:shadow-md transition-shadow">
+            <div class="party-card border rounded-xl p-4 hover:shadow-md transition-shadow">
               <div class="flex items-start gap-4">
                 <div class="flex-1">
                   <div class="flex items-center gap-2 mb-2">
-                    <span class="font-medium">Jackson's 6th Birthday</span>
+                    <span class="party-name font-medium">Jackson's 6th Birthday</span>
                     <span class="bg-[var(--blue)] text-white text-xs px-2 py-0.5 rounded-full">2:00 PM</span>
                   </div>
                   <div class="grid grid-cols-3 gap-6 mb-4">
@@ -563,11 +562,11 @@
             </div>
 
             <!-- Another Party Card -->
-            <div class="border rounded-xl p-4 hover:shadow-md transition-shadow">
+            <div class="party-card border rounded-xl p-4 hover:shadow-md transition-shadow">
               <div class="flex items-start gap-4">
                 <div class="flex-1">
                   <div class="flex items-center gap-2 mb-2">
-                    <span class="font-medium">Emma's Princess Party</span>
+                    <span class="party-name font-medium">Emma's Princess Party</span>
                     <span class="bg-[var(--blue)] text-white text-xs px-2 py-0.5 rounded-full">4:30 PM</span>
                   </div>
                   <div class="grid grid-cols-3 gap-6 mb-4">
@@ -610,11 +609,11 @@
           <div class="font-medium text-gray-500 mt-8 mb-2">Tomorrow</div>
           <div class="grid gap-4">
             <!-- Party Card -->
-            <div class="border rounded-xl p-4 hover:shadow-md transition-shadow">
+            <div class="party-card border rounded-xl p-4 hover:shadow-md transition-shadow">
               <div class="flex items-start gap-4">
                 <div class="flex-1">
                   <div class="flex items-center gap-2 mb-2">
-                    <span class="font-medium">Lucas' Superhero Party</span>
+                    <span class="party-name font-medium">Lucas' Superhero Party</span>
                     <span class="bg-[var(--blue)] text-white text-xs px-2 py-0.5 rounded-full">1:00 PM</span>
                   </div>
                   <div class="grid grid-cols-3 gap-6 mb-4">
@@ -647,6 +646,248 @@
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                     </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Party Details Modal -->
+      <div id="partyDetailsModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-2xl w-full max-w-4xl mx-4 overflow-hidden">
+          <div class="flex justify-between items-center p-6 border-b">
+            <h3 class="text-xl font-semibold party-title">Party Details</h3>
+            <button onclick="closeModal('partyDetailsModal')" class="text-gray-400 hover:text-gray-600">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+            </button>
+          </div>
+          
+          <div class="p-6">
+            <div class="grid grid-cols-3 gap-6">
+              <!-- Main Info -->
+              <div class="col-span-2 space-y-6">
+                <div class="flex items-center gap-4">
+                  <div class="flex-1">
+                    <div class="text-sm text-gray-500">Birthday Child</div>
+                    <div class="text-lg font-medium party-child">Jackson</div>
+                  </div>
+                  <div>
+                    <div class="text-sm text-gray-500">Age</div>
+                    <div class="text-lg font-medium party-age">6</div>
+                  </div>
+                  <div>
+                    <div class="text-sm text-gray-500">Date & Time</div>
+                    <div class="text-lg font-medium party-datetime">Mar 23, 2:00 PM</div>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                  <div class="border rounded-lg p-4">
+                    <div class="text-sm font-medium mb-2">Package Details</div>
+                    <div class="space-y-2 text-sm">
+                      <div class="flex justify-between">
+                        <span>Base Package</span>
+                        <span class="font-medium">Adventure Plus ($299)</span>
+                      </div>
+                      <div class="flex justify-between text-green-600">
+                        <span>Add-ons</span>
+                        <span>+ $150</span>
+                      </div>
+                      <div class="flex justify-between text-blue-600">
+                        <span>Extra Time</span>
+                        <span>+ $50</span>
+                      </div>
+                      <div class="pt-2 border-t flex justify-between font-medium">
+                        <span>Total</span>
+                        <span>$499</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="border rounded-lg p-4">
+                    <div class="text-sm font-medium mb-2">Guest Status</div>
+                    <div class="space-y-2 text-sm">
+                      <div class="flex justify-between">
+                        <span>Invited</span>
+                        <span class="font-medium">15</span>
+                      </div>
+                      <div class="flex justify-between text-green-600">
+                        <span>Confirmed</span>
+                        <span>12</span>
+                      </div>
+                      <div class="flex justify-between text-yellow-600">
+                        <span>Maybe</span>
+                        <span>2</span>
+                      </div>
+                      <div class="flex justify-between text-red-600">
+                        <span>Declined</span>
+                        <span>1</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="border rounded-lg p-4">
+                  <div class="text-sm font-medium mb-2">Special Requirements</div>
+                  <div class="space-y-3 text-sm">
+                    <div>
+                      <div class="font-medium text-red-600">Allergies</div>
+                      <div>Peanuts (2 guests), Dairy (1 guest)</div>
+                    </div>
+                    <div>
+                      <div class="font-medium text-blue-600">Accessibility</div>
+                      <div>Wheelchair access needed for one parent</div>
+                    </div>
+                    <div>
+                      <div class="font-medium text-purple-600">Special Requests</div>
+                      <div>Superhero-themed decorations, Gluten-free cake option</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Side Panel -->
+              <div class="space-y-4">
+                <div class="border rounded-lg p-4">
+                  <div class="text-sm font-medium mb-2">Parent Contact</div>
+                  <div class="space-y-2 text-sm">
+                    <div>
+                      <div class="text-gray-500">Name</div>
+                      <div>Sarah Johnson</div>
+                    </div>
+                    <div>
+                      <div class="text-gray-500">Phone</div>
+                      <div>+1 (555) 123-4567</div>
+                    </div>
+                    <div>
+                      <div class="text-gray-500">Email</div>
+                      <div>sarah.j@email.com</div>
+                    </div>
+                  </div>
+                  <button class="w-full mt-3 px-3 py-2 bg-[var(--blue)] text-white rounded-lg text-sm">Message Parent</button>
+                </div>
+
+                <div class="border rounded-lg p-4">
+                  <div class="text-sm font-medium mb-2">Staff Assigned</div>
+                  <div class="space-y-2">
+                    <div class="flex items-center gap-2">
+                      <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+                        <span class="text-sm font-medium text-blue-600">JD</span>
+                      </div>
+                      <div class="text-sm">John Doe (Lead)</div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
+                        <span class="text-sm font-medium text-green-600">AS</span>
+                      </div>
+                      <div class="text-sm">Amy Smith</div>
+                    </div>
+                  </div>
+                  <button class="w-full mt-3 px-3 py-2 border rounded-lg text-sm">Manage Staff</button>
+                </div>
+
+                <div class="border rounded-lg p-4">
+                  <div class="text-sm font-medium mb-2">Quick Actions</div>
+                  <div class="space-y-2">
+                    <button class="w-full px-3 py-2 bg-[var(--orange)] text-white rounded-lg text-sm">Edit Party Details</button>
+                    <button class="w-full px-3 py-2 border rounded-lg text-sm">Print Party Sheet</button>
+                    <button class="w-full px-3 py-2 border rounded-lg text-sm">Send Reminder</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Staff Notes Modal -->
+      <div id="staffNotesModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-2xl w-full max-w-4xl mx-4 overflow-hidden">
+          <div class="flex justify-between items-center p-6 border-b">
+            <h3 class="text-xl font-semibold party-title">Staff Notes</h3>
+            <button onclick="closeModal('staffNotesModal')" class="text-gray-400 hover:text-gray-600">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+            </button>
+          </div>
+          
+          <div class="p-6">
+            <div class="grid grid-cols-3 gap-6">
+              <!-- Notes List -->
+              <div class="col-span-2 space-y-4">
+                <div class="flex justify-between items-center">
+                  <h4 class="font-medium">Notes & Updates</h4>
+                  <div class="flex gap-2">
+                    <button class="px-3 py-1 text-sm border rounded-lg">Filter</button>
+                    <button class="px-3 py-1 text-sm bg-[var(--blue)] text-white rounded-lg">Add Note</button>
+                  </div>
+                </div>
+
+                <div class="space-y-4">
+                  <!-- Note Entry -->
+                  <div class="border rounded-lg p-4">
+                    <div class="flex justify-between items-start mb-2">
+                      <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+                          <span class="text-sm font-medium text-blue-600">JD</span>
+                        </div>
+                        <div>
+                          <div class="font-medium">John Doe</div>
+                          <div class="text-xs text-gray-500">Mar 22, 10:30 AM</div>
+                        </div>
+                      </div>
+                      <span class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-600">Setup</span>
+                    </div>
+                    <p class="text-sm text-gray-600">Confirmed all decorations are in stock. Will need extra time for balloon arch setup.</p>
+                  </div>
+
+                  <div class="border rounded-lg p-4">
+                    <div class="flex justify-between items-start mb-2">
+                      <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center">
+                          <span class="text-sm font-medium text-purple-600">MM</span>
+                        </div>
+                        <div>
+                          <div class="font-medium">Mike Miller</div>
+                          <div class="text-xs text-gray-500">Mar 21, 2:15 PM</div>
+                        </div>
+                      </div>
+                      <span class="px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-600">Planning</span>
+                    </div>
+                    <p class="text-sm text-gray-600">Parent requested superhero-themed plates and napkins. Added to inventory order.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Quick Add Note -->
+              <div class="space-y-4">
+                <div class="border rounded-lg p-4">
+                  <h4 class="font-medium mb-3">Quick Note</h4>
+                  <div class="space-y-3">
+                    <select class="w-full border rounded-lg px-3 py-2 text-sm">
+                      <option>Select Category</option>
+                      <option>Setup</option>
+                      <option>Planning</option>
+                      <option>Staff</option>
+                      <option>Parent Request</option>
+                      <option>Issue</option>
+                    </select>
+                    <textarea class="w-full border rounded-lg px-3 py-2 text-sm h-32" placeholder="Type your note here..."></textarea>
+                    <button class="w-full px-3 py-2 bg-[var(--orange)] text-white rounded-lg text-sm">Add Note</button>
+                  </div>
+                </div>
+
+                <div class="border rounded-lg p-4">
+                  <h4 class="font-medium mb-2">Note Templates</h4>
+                  <div class="space-y-2">
+                    <button class="w-full px-3 py-2 text-left text-sm border rounded-lg hover:bg-gray-50">🎨 Setup Checklist</button>
+                    <button class="w-full px-3 py-2 text-left text-sm border rounded-lg hover:bg-gray-50">🎂 Food Preparation</button>
+                    <button class="w-full px-3 py-2 text-left text-sm border rounded-lg hover:bg-gray-50">👥 Staff Briefing</button>
                   </div>
                 </div>
               </div>
@@ -688,6 +929,11 @@
       // copy invite link
       const copyBtn=document.getElementById('copyLink');
       if(copyBtn){copyBtn.addEventListener('click',()=>{navigator.clipboard.writeText(document.getElementById('inviteLink').value);copyBtn.textContent='Copied!';setTimeout(()=>copyBtn.textContent='Copy',1500);});}
+
+      // Provider Dashboard Functionality
+      if (document.getElementById('provider')) {
+        initializeProviderDashboard();
+      }
     });
 
     // RSVP Modal Functionality
@@ -818,6 +1064,242 @@
         closeInviteModal();
       }
     });
+
+    // Provider Dashboard Initialization
+    function initializeProviderDashboard() {
+      initializeChat();
+      initializeCalendar();
+      initializeExports();
+      initializePartyCards();
+    }
+
+    // Chat Functionality
+    function initializeChat() {
+      const chatInput = document.querySelector('#staffChat input');
+      const chatSend = document.querySelector('#staffChat button');
+      const chatMessages = document.querySelector('#staffChat .messages');
+
+      if (chatInput && chatSend && chatMessages) {
+        chatSend.addEventListener('click', () => sendChatMessage(chatInput.value));
+        chatInput.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') sendChatMessage(chatInput.value);
+        });
+      }
+    }
+
+    function sendChatMessage(message) {
+      if (!message.trim()) return;
+      
+      const chatMessages = document.querySelector('#staffChat .messages');
+      const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      
+      const messageHTML = `
+        <div class="flex gap-3 animate-fade-in">
+          <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+            <span class="text-sm font-medium text-blue-600">ME</span>
+          </div>
+          <div class="flex-1">
+            <div class="flex justify-between">
+              <span class="text-sm font-medium">You</span>
+              <span class="text-xs text-gray-500">${timestamp}</span>
+            </div>
+            <p class="text-sm text-gray-600">${message}</p>
+          </div>
+        </div>
+      `;
+      
+      chatMessages.insertAdjacentHTML('beforeend', messageHTML);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+      document.querySelector('#staffChat input').value = '';
+    }
+
+    // Calendar Functionality
+    function initializeCalendar() {
+      const calendarDays = document.querySelectorAll('.calendar-day');
+      
+      calendarDays.forEach(day => {
+        // Make days draggable
+        day.addEventListener('dragstart', handleDragStart);
+        day.addEventListener('dragover', handleDragOver);
+        day.addEventListener('drop', handleDrop);
+        
+        // Add time slot functionality
+        const timeSlots = day.querySelectorAll('.time-slot');
+        timeSlots.forEach(slot => {
+          slot.addEventListener('click', () => toggleTimeSlot(slot));
+        });
+      });
+    }
+
+    function handleDragStart(e) {
+      e.dataTransfer.setData('text/plain', e.target.id);
+      e.target.classList.add('opacity-50');
+    }
+
+    function handleDragOver(e) {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+    }
+
+    function handleDrop(e) {
+      e.preventDefault();
+      const sourceId = e.dataTransfer.getData('text/plain');
+      const source = document.getElementById(sourceId);
+      const target = e.target.closest('.calendar-day');
+      
+      if (source && target) {
+        // Swap the time slots between days
+        const sourceSlots = source.querySelector('.time-slots').innerHTML;
+        const targetSlots = target.querySelector('.time-slots').innerHTML;
+        source.querySelector('.time-slots').innerHTML = targetSlots;
+        target.querySelector('.time-slots').innerHTML = sourceSlots;
+        
+        // Update status colors
+        updateDayStatus(source);
+        updateDayStatus(target);
+      }
+      
+      source.classList.remove('opacity-50');
+    }
+
+    function toggleTimeSlot(slot) {
+      const states = ['bg-green-500', 'bg-yellow-500', 'bg-red-500'];
+      const currentState = states.find(state => slot.classList.contains(state));
+      const currentIndex = states.indexOf(currentState);
+      const nextIndex = (currentIndex + 1) % states.length;
+      
+      states.forEach(state => slot.classList.remove(state));
+      slot.classList.add(states[nextIndex]);
+      
+      updateDayStatus(slot.closest('.calendar-day'));
+    }
+
+    function updateDayStatus(day) {
+      const slots = day.querySelectorAll('.time-slot');
+      const hasRed = Array.from(slots).some(slot => slot.classList.contains('bg-red-500'));
+      const hasYellow = Array.from(slots).some(slot => slot.classList.contains('bg-yellow-500'));
+      const hasGreen = Array.from(slots).some(slot => slot.classList.contains('bg-green-500'));
+      
+      day.classList.remove('bg-red-50', 'bg-yellow-50', 'bg-green-50');
+      if (hasRed) day.classList.add('bg-red-50');
+      else if (hasYellow) day.classList.add('bg-yellow-50');
+      else if (hasGreen) day.classList.add('bg-green-50');
+    }
+
+    // Export Functionality
+    function initializeExports() {
+      const exportButtons = document.querySelectorAll('#exportTools button');
+      
+      exportButtons.forEach(button => {
+        button.addEventListener('click', () => handleExport(button.dataset.type));
+      });
+    }
+
+    function handleExport(type) {
+      // Show loading state
+      const button = document.querySelector(`[data-type="${type}"]`);
+      const originalText = button.textContent;
+      button.innerHTML = '<span class="animate-spin">↻</span> Exporting...';
+      
+      // Simulate export process
+      setTimeout(() => {
+        button.textContent = '✓ Exported!';
+        
+        // Show success message
+        const toast = document.createElement('div');
+        toast.className = 'fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg animate-fade-in';
+        toast.textContent = `${type} exported successfully!`;
+        document.body.appendChild(toast);
+        
+        // Reset button and remove toast
+        setTimeout(() => {
+          button.textContent = originalText;
+          toast.remove();
+        }, 3000);
+      }, 1500);
+    }
+
+    // Party Card Functionality
+    function initializePartyCards() {
+      const actionButtons = document.querySelectorAll('.party-card button');
+      
+      actionButtons.forEach(button => {
+        button.addEventListener('click', () => handlePartyAction(button));
+      });
+    }
+
+    function handlePartyAction(button) {
+      const action = button.textContent.toLowerCase();
+      const card = button.closest('.party-card');
+      const partyName = card.querySelector('.party-name').textContent;
+      
+      switch (action) {
+        case 'view details':
+          showPartyDetails(partyName);
+          break;
+        case 'message parent':
+          openParentMessage(partyName);
+          break;
+        case 'staff notes':
+          openStaffNotes(partyName);
+          break;
+      }
+    }
+
+    function showPartyDetails(partyName) {
+      const modal = document.getElementById('partyDetailsModal');
+      modal.classList.remove('hidden');
+      modal.querySelector('.party-title').textContent = `Party Details - ${partyName}`;
+      
+      // Would typically fetch party details from backend here
+      // For now, we'll just show the modal with sample data
+    }
+
+    function openParentMessage(partyName) {
+      const chatInput = document.querySelector('#staffChat input');
+      chatInput.value = `Re: ${partyName} - `;
+      chatInput.focus();
+    }
+
+    function openStaffNotes(partyName) {
+      const modal = document.getElementById('staffNotesModal');
+      modal.classList.remove('hidden');
+      modal.querySelector('.party-title').textContent = `Staff Notes - ${partyName}`;
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId).classList.add('hidden');
+    }
+
+    // Close modals when clicking outside
+    document.querySelectorAll('#partyDetailsModal, #staffNotesModal').forEach(modal => {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          closeModal(modal.id);
+        }
+      });
+    });
+
+    // Add some CSS animations
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes fade-in {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .animate-fade-in {
+        animation: fade-in 0.3s ease-out;
+      }
+      @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+      .animate-spin {
+        display: inline-block;
+        animation: spin 1s linear infinite;
+      }
+    `;
+    document.head.appendChild(style);
   </script>
 </body>
 </html>
