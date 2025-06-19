@@ -304,23 +304,212 @@
 
     <!-- PROVIDER PANEL -->
     <section id="provider" class="tab-panel hidden">
-      <div class="bg-white rounded-3xl shadow-xl p-6 space-y-6">
-        <h2 class="text-lg font-semibold text-center">Provider Dashboard</h2>
-        <!-- Roster -->
-        <table class="w-full text-xs">
-          <thead class="text-left text-gray-500"><tr><th>Child</th><th class="text-center">RSVP</th><th class="text-center">Waiver</th><th class="text-center">Lead?</th></tr></thead>
-          <tbody class="divide-y text-gray-700">
-            <tr><td>Olivia Parker</td><td class="text-center text-green-600">Yes</td><td class="text-center text-green-600">✔︎</td><td class="text-center"><input type="checkbox" class="accent-[var(--orange)]"></td></tr>
-            <tr><td>Jack Taylor</td><td class="text-center text-yellow-500">Maybe</td><td class="text-center text-gray-400">—</td><td class="text-center"><input type="checkbox" class="accent-[var(--orange)]"></td></tr>
-          </tbody>
-        </table>
-        <!-- Actions -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <button class="py-2 rounded-xl bg-[var(--orange)] text-white">Send RSVP reminder</button>
-          <button class="py-2 rounded-xl bg-[var(--blue)] text-white">Send tip prompt</button>
+      <div class="bg-white rounded-3xl shadow-xl p-6 max-w-6xl mx-auto">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-xl font-semibold">Provider Dashboard</h2>
+          <div class="flex gap-3">
+            <div class="bg-[var(--gray)] rounded-lg px-4 py-2 text-sm">
+              <span class="text-gray-500">Today's parties:</span>
+              <span class="font-medium ml-1">3</span>
+            </div>
+            <div class="bg-[var(--gray)] rounded-lg px-4 py-2 text-sm">
+              <span class="text-gray-500">This week:</span>
+              <span class="font-medium ml-1">12</span>
+            </div>
+          </div>
         </div>
-        <!-- Revenue quick stat -->
-        <div class="text-sm text-center pt-4 border-t"><span class="font-medium">Projected revenue:</span> $420</div>
+
+        <!-- Quick Actions -->
+        <div class="grid grid-cols-4 gap-4 mb-6">
+          <button class="p-4 rounded-xl bg-[var(--blue)] text-white text-left">
+            <div class="font-medium mb-1">Create Party</div>
+            <div class="text-sm opacity-80">Set up a new event</div>
+          </button>
+          <button class="p-4 rounded-xl bg-[var(--orange)] text-white text-left">
+            <div class="font-medium mb-1">Staff Schedule</div>
+            <div class="text-sm opacity-80">Manage assignments</div>
+          </button>
+          <button class="p-4 rounded-xl bg-[var(--green)] text-white text-left">
+            <div class="font-medium mb-1">Inventory</div>
+            <div class="text-sm opacity-80">Check supplies</div>
+          </button>
+          <button class="p-4 rounded-xl bg-purple-500 text-white text-left">
+            <div class="font-medium mb-1">Reports</div>
+            <div class="text-sm opacity-80">View analytics</div>
+          </button>
+        </div>
+
+        <!-- Tabs -->
+        <div class="border-b mb-6">
+          <div class="flex gap-6">
+            <button class="px-4 py-2 border-b-2 border-[var(--orange)] text-[var(--orange)] font-medium">Upcoming</button>
+            <button class="px-4 py-2 text-gray-500">Past Events</button>
+            <button class="px-4 py-2 text-gray-500">Drafts</button>
+          </div>
+        </div>
+
+        <!-- Party List -->
+        <div class="space-y-4">
+          <!-- Today's Parties -->
+          <div class="font-medium text-gray-500 mb-2">Today</div>
+          <div class="grid gap-4">
+            <!-- Party Card -->
+            <div class="border rounded-xl p-4 hover:shadow-md transition-shadow">
+              <div class="flex items-start gap-4">
+                <div class="flex-1">
+                  <div class="flex items-center gap-2 mb-2">
+                    <span class="font-medium">Jackson's 6th Birthday</span>
+                    <span class="bg-[var(--blue)] text-white text-xs px-2 py-0.5 rounded-full">2:00 PM</span>
+                  </div>
+                  <div class="grid grid-cols-3 gap-6 mb-4">
+                    <div class="text-sm">
+                      <div class="text-gray-500">Guests</div>
+                      <div>12 confirmed</div>
+                    </div>
+                    <div class="text-sm">
+                      <div class="text-gray-500">Package</div>
+                      <div>Adventure Plus</div>
+                    </div>
+                    <div class="text-sm">
+                      <div class="text-gray-500">Status</div>
+                      <div class="text-green-600">Ready</div>
+                    </div>
+                  </div>
+                  <div class="flex gap-2 text-sm">
+                    <button class="px-3 py-1 rounded-lg bg-[var(--gray)] text-gray-600">View Details</button>
+                    <button class="px-3 py-1 rounded-lg bg-[var(--gray)] text-gray-600">Message Parent</button>
+                    <button class="px-3 py-1 rounded-lg bg-[var(--gray)] text-gray-600">Staff Notes</button>
+                  </div>
+                </div>
+                <div class="flex gap-2">
+                  <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-600" title="All waivers signed">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                    </svg>
+                  </div>
+                  <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600" title="Payment completed">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Another Party Card -->
+            <div class="border rounded-xl p-4 hover:shadow-md transition-shadow">
+              <div class="flex items-start gap-4">
+                <div class="flex-1">
+                  <div class="flex items-center gap-2 mb-2">
+                    <span class="font-medium">Emma's Princess Party</span>
+                    <span class="bg-[var(--blue)] text-white text-xs px-2 py-0.5 rounded-full">4:30 PM</span>
+                  </div>
+                  <div class="grid grid-cols-3 gap-6 mb-4">
+                    <div class="text-sm">
+                      <div class="text-gray-500">Guests</div>
+                      <div>8 confirmed</div>
+                    </div>
+                    <div class="text-sm">
+                      <div class="text-gray-500">Package</div>
+                      <div>Royal Package</div>
+                    </div>
+                    <div class="text-sm">
+                      <div class="text-gray-500">Status</div>
+                      <div class="text-yellow-600">Needs Setup</div>
+                    </div>
+                  </div>
+                  <div class="flex gap-2 text-sm">
+                    <button class="px-3 py-1 rounded-lg bg-[var(--gray)] text-gray-600">View Details</button>
+                    <button class="px-3 py-1 rounded-lg bg-[var(--gray)] text-gray-600">Message Parent</button>
+                    <button class="px-3 py-1 rounded-lg bg-[var(--gray)] text-gray-600">Staff Notes</button>
+                  </div>
+                </div>
+                <div class="flex gap-2">
+                  <div class="w-8 h-8 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-600" title="2 waivers pending">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                  </div>
+                  <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600" title="Payment completed">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tomorrow's Parties -->
+          <div class="font-medium text-gray-500 mt-8 mb-2">Tomorrow</div>
+          <div class="grid gap-4">
+            <!-- Party Card -->
+            <div class="border rounded-xl p-4 hover:shadow-md transition-shadow">
+              <div class="flex items-start gap-4">
+                <div class="flex-1">
+                  <div class="flex items-center gap-2 mb-2">
+                    <span class="font-medium">Lucas' Superhero Party</span>
+                    <span class="bg-[var(--blue)] text-white text-xs px-2 py-0.5 rounded-full">1:00 PM</span>
+                  </div>
+                  <div class="grid grid-cols-3 gap-6 mb-4">
+                    <div class="text-sm">
+                      <div class="text-gray-500">Guests</div>
+                      <div>15 confirmed</div>
+                    </div>
+                    <div class="text-sm">
+                      <div class="text-gray-500">Package</div>
+                      <div>Hero Ultimate</div>
+                    </div>
+                    <div class="text-sm">
+                      <div class="text-gray-500">Status</div>
+                      <div class="text-purple-600">Draft</div>
+                    </div>
+                  </div>
+                  <div class="flex gap-2 text-sm">
+                    <button class="px-3 py-1 rounded-lg bg-[var(--gray)] text-gray-600">View Details</button>
+                    <button class="px-3 py-1 rounded-lg bg-[var(--gray)] text-gray-600">Message Parent</button>
+                    <button class="px-3 py-1 rounded-lg bg-[var(--gray)] text-gray-600">Staff Notes</button>
+                  </div>
+                </div>
+                <div class="flex gap-2">
+                  <div class="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center text-red-600" title="No waivers yet">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                  </div>
+                  <div class="w-8 h-8 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-600" title="Partial payment">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Calendar Preview -->
+        <div class="mt-8 border-t pt-6">
+          <div class="flex justify-between items-center mb-4">
+            <h3 class="font-medium">Upcoming Calendar</h3>
+            <button class="text-[var(--blue)]">View Full Calendar</button>
+          </div>
+          <div class="grid grid-cols-7 gap-2">
+            <div class="text-center text-sm text-gray-500">Mon</div>
+            <div class="text-center text-sm text-gray-500">Tue</div>
+            <div class="text-center text-sm text-gray-500">Wed</div>
+            <div class="text-center text-sm text-gray-500">Thu</div>
+            <div class="text-center text-sm text-gray-500">Fri</div>
+            <div class="text-center text-sm text-gray-500">Sat</div>
+            <div class="text-center text-sm text-gray-500">Sun</div>
+            <!-- Calendar days -->
+            <div class="aspect-square rounded-lg bg-[var(--gray)] p-2 text-sm">
+              <div class="font-medium">1</div>
+              <div class="text-xs text-[var(--blue)]">2 parties</div>
+            </div>
+            <!-- Add more days as needed -->
+          </div>
+        </div>
       </div>
     </section>
   </div>
