@@ -211,100 +211,138 @@
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"/>
                     </svg>
-                    Share Contacts (iPhone)
+                    Open Contacts App
                   `;
-                  contactPickerBtn.onclick = initiateIOSContactShare;
+                  contactPickerBtn.onclick = openIOSContacts;
                 } else if (!('contacts' in navigator && 'ContactsManager' in window)) {
                   // If neither is supported, hide the entire container
                   contactPickerContainer.style.display = 'none';
                 }
               });
 
-              // iOS Share Sheet Integration
-              function initiateIOSContactShare() {
-                // Create a unique URL for this sharing session
-                const sessionId = Date.now();
-                const shareUrl = `${window.location.origin}${window.location.pathname}?action=share-contacts&session=${sessionId}`;
-                const shareText = "Select contacts to invite to the party";
+              // iOS Contacts Integration
+              function openIOSContacts() {
+                // Create a deep link to the iOS Contacts app
+                window.location.href = 'contacts://';
                 
-                if (navigator.share) {
-                  navigator.share({
-                    title: 'Share Contacts',
-                    text: shareText,
-                    url: shareUrl
-                  }).then(() => {
-                    // Show loading state while we wait for the contacts
-                    const toast = document.createElement('div');
-                    toast.className = 'fixed top-4 right-4 bg-[var(--blue)] text-white px-4 py-2 rounded-lg shadow-lg animate-fade-in';
-                    toast.textContent = 'Select contacts from your address book';
-                    document.body.appendChild(toast);
-                    setTimeout(() => toast.remove(), 3000);
+                // Show instructions toast
+                const toast = document.createElement('div');
+                toast.className = 'fixed top-4 right-4 bg-white text-gray-800 px-6 py-4 rounded-lg shadow-xl space-y-2 max-w-xs';
+                toast.innerHTML = `
+                  <div class="font-medium">How to share contacts:</div>
+                  <ol class="text-sm space-y-2 list-decimal pl-4">
+                    <li>Select contacts in the Contacts app</li>
+                    <li>Tap Share Contact</li>
+                    <li>Choose "Copy"</li>
+                    <li>Return here and paste</li>
+                  </ol>
+                  <button onclick="showContactPasteUI()" class="mt-3 w-full py-2 bg-[var(--blue)] text-white rounded-lg text-sm">
+                    I've copied contacts
+                  </button>
+                `;
+                document.body.appendChild(toast);
 
-                    // Poll for shared contacts (in a real app, this would check a server endpoint)
-                    checkForSharedContacts(sessionId);
-                  }).catch((error) => {
-                    console.error('Error sharing:', error);
-                    const toast = document.createElement('div');
-                    toast.className = 'fixed top-4 right-4 bg-red-500 text-white px-4 py-2 rounded-lg shadow-lg animate-fade-in';
-                    toast.textContent = 'Could not access contacts. Please add manually.';
-                    document.body.appendChild(toast);
-                    setTimeout(() => toast.remove(), 3000);
-                  });
-                } else {
-                  // Fallback for older iOS versions - use mailto: protocol
-                  const mailtoUrl = `mailto:?subject=Party Invitation&body=${encodeURIComponent(shareText + '\n' + shareUrl)}`;
-                  window.location.href = mailtoUrl;
-                }
+                // Add close button
+                const closeBtn = document.createElement('button');
+                closeBtn.className = 'absolute top-2 right-2 text-gray-400 hover:text-gray-600';
+                closeBtn.innerHTML = `
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                  </svg>
+                `;
+                closeBtn.onclick = () => toast.remove();
+                toast.appendChild(closeBtn);
               }
 
-              // Simulate checking for shared contacts
-              function checkForSharedContacts(sessionId) {
-                // In a real app, this would poll a server endpoint
-                // For demo purposes, we'll just show a success message
-                setTimeout(() => {
-                  const demoContacts = [
-                    { name: 'John Smith', email: 'john@example.com', phone: '123-456-7890' },
-                    { name: 'Jane Doe', email: 'jane@example.com', phone: '098-765-4321' }
-                  ];
-                  
-                  // Add the demo contacts to the list
-                  demoContacts.forEach(contact => {
+              // Show paste UI for iOS contacts
+              function showContactPasteUI() {
+                const modal = document.createElement('div');
+                modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+                modal.innerHTML = `
+                  <div class="bg-white rounded-2xl w-full max-w-md mx-4 p-6 space-y-4">
+                    <div class="text-lg font-semibold">Paste Contacts</div>
+                    <textarea 
+                      class="w-full h-32 border rounded-lg px-3 py-2 text-sm" 
+                      placeholder="Paste your copied contacts here..."
+                      onpaste="handleContactPaste(event)"
+                    ></textarea>
+                    <div class="text-sm text-gray-500">
+                      Paste the contacts you copied from the Contacts app here
+                    </div>
+                    <div class="flex justify-end gap-2">
+                      <button onclick="this.closest('.fixed').remove()" class="px-4 py-2 border rounded-lg text-sm">
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                `;
+                document.body.appendChild(modal);
+
+                // Close when clicking outside
+                modal.addEventListener('click', (e) => {
+                  if (e.target === modal) modal.remove();
+                });
+              }
+
+              // Handle pasted contact data
+              function handleContactPaste(event) {
+                const pastedText = event.clipboardData.getData('text');
+                
+                // Parse the pasted text for contact information
+                // This is a simple example - you might want to enhance the parsing logic
+                const contacts = parseContactsFromText(pastedText);
+                
+                if (contacts.length > 0) {
+                  // Add the contacts to the guest list
+                  contacts.forEach(contact => {
                     addGuestEntry(contact.name, contact.email, contact.phone);
                   });
 
                   // Show success message
                   const toast = document.createElement('div');
                   toast.className = 'fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg animate-fade-in';
-                  toast.textContent = `${demoContacts.length} contacts imported`;
+                  toast.textContent = `${contacts.length} contact${contacts.length === 1 ? '' : 's'} added`;
                   document.body.appendChild(toast);
                   setTimeout(() => toast.remove(), 3000);
-                }, 2000);
+
+                  // Close the paste modal
+                  event.target.closest('.fixed').remove();
+                }
               }
 
-              // Modified addGuestEntry to accept contact details
-              function addGuestEntry(name = '', email = '', phone = '') {
-                const guestList = document.getElementById('guestList');
-                const entryId = Date.now() + Math.random();
+              // Parse contacts from pasted text
+              function parseContactsFromText(text) {
+                // This is a simple parser - you might want to enhance it based on your needs
+                const contacts = [];
                 
-                const entry = document.createElement('div');
-                entry.className = 'guest-entry bg-[var(--gray)] rounded-xl p-4 relative';
-                entry.innerHTML = `
-                  <button onclick="removeGuestEntry(${entryId})" class="absolute right-2 top-2 text-gray-400 hover:text-gray-600">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                    </svg>
-                  </button>
-                  <div class="space-y-3">
-                    <input type="text" placeholder="Guest Name" value="${name}" class="w-full border rounded-lg px-3 py-2 text-sm" />
-                    <div class="grid grid-cols-7 gap-2 items-center">
-                      <input type="email" placeholder="Email" value="${email}" class="col-span-3 border rounded-lg px-3 py-2 text-sm" />
-                      <div class="text-center text-sm text-gray-400">or</div>
-                      <input type="tel" placeholder="Phone" value="${phone}" class="col-span-3 border rounded-lg px-3 py-2 text-sm" />
-                    </div>
-                  </div>
-                `;
+                // Split by double newlines (usually separates contacts)
+                const entries = text.split(/\n\s*\n/);
                 
-                guestList.appendChild(entry);
+                entries.forEach(entry => {
+                  const lines = entry.split('\n');
+                  const contact = {
+                    name: '',
+                    email: '',
+                    phone: ''
+                  };
+
+                  lines.forEach(line => {
+                    line = line.trim();
+                    if (line.match(/@/)) {
+                      contact.email = line;
+                    } else if (line.match(/[\d-+()]/)) {
+                      contact.phone = line;
+                    } else if (line) {
+                      contact.name = line;
+                    }
+                  });
+
+                  if (contact.name || contact.email || contact.phone) {
+                    contacts.push(contact);
+                  }
+                });
+
+                return contacts;
               }
 
               async function pickContacts() {
