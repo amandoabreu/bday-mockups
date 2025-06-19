@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RSVP Flow — v3</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root{--peach:#fff7f4;--orange:#f8a88e;--orange-light:#fad2c3;--blue:#7bb6ff;--green:#8cd9a2;--gray:#f3f4f6;}
+    body{font-family:'Inter',sans-serif;}
+  </style>
+</head>
+<body class="bg-[var(--peach)] min-h-screen flex flex-col items-center py-12">
+  <h1 class="text-3xl font-bold mb-6">RSVP Flow Prototype (v3)</h1>
+
+  <!-- TABS -->
+  <div class="flex gap-4 mb-8">
+    <button data-tab="parent"   class="tab-btn rounded-full px-5 py-2 text-sm font-medium shadow bg-white">Parent</button>
+    <button data-tab="guest"    class="tab-btn rounded-full px-5 py-2 text-sm font-medium shadow bg-white">Guest</button>
+    <button data-tab="provider" class="tab-btn rounded-full px-5 py-2 text-sm font-medium shadow bg-white">Provider</button>
+  </div>
+
+  <!-- PANELS -->
+  <div class="w-full max-w-3xl px-4 space-y-10">
+    <!-- PARENT PANEL -->
+    <section id="parent" class="tab-panel hidden">
+      <div class="bg-white rounded-3xl shadow-xl p-6 space-y-6">
+        <h2 class="text-lg font-semibold text-center">Parent</h2>
+        <!-- Invite link -->
+        <div class="flex items-center gap-2 text-sm">
+          <input id="inviteLink" readonly value="https://party.ly/jackson-6-9" class="flex-1 border rounded-lg px-2 py-1 text-xs bg-[var(--gray)]"/>
+          <button id="copyLink" class="px-3 py-1 rounded-lg bg-[var(--blue)] text-white text-xs">Copy</button>
+        </div>
+        <!-- Progress bar -->
+        <p class="text-sm font-medium">Planning progress</p>
+        <div class="w-full h-2 rounded-full bg-[var(--orange-light)]">
+          <div class="h-2 rounded-full bg-[var(--orange)]" style="width:60%"></div>
+        </div>
+        <!-- Guest list -->
+        <h3 class="text-sm font-medium">Guests</h3>
+        <table class="w-full text-xs">
+          <thead class="text-left text-gray-500">
+            <tr><th>Name</th><th class="text-center">RSVP</th><th class="text-center">Waiver signed</th></tr>
+          </thead>
+          <tbody class="divide-y text-gray-700">
+            <tr><td>Olivia</td><td class="text-center text-green-600">Yes</td><td class="text-center text-green-600">✔︎</td></tr>
+            <tr><td>James</td><td class="text-center text-red-400">No</td><td class="text-center text-gray-400">—</td></tr>
+            <tr><td>Jack</td><td class="text-center text-yellow-500">Maybe</td><td class="text-center text-gray-400">—</td></tr>
+            <tr><td>Jesse</td><td class="text-center text-green-600">Yes</td><td class="text-center text-green-600">✔︎</td></tr>
+          </tbody>
+        </table>
+        <!-- Add‑ons quick picker -->
+        <details class="border rounded-lg p-3">
+          <summary class="cursor-pointer text-sm font-medium">Add‑ons & Upgrades</summary>
+          <div class="mt-3 space-y-2 text-sm">
+            <label class="flex justify-between items-center"><span>Balloon Bundle</span><input type="checkbox" class="accent-[var(--orange)]"></label>
+            <label class="flex justify-between items-center"><span>Photographer</span><input type="checkbox" class="accent-[var(--orange)]"></label>
+            <label class="flex justify-between items-center"><span>Extra 30 min play</span><input type="checkbox" class="accent-[var(--orange)]"></label>
+          </div>
+        </details>
+        <!-- Balance -->
+        <div class="flex justify-between text-sm font-medium"><span>Total Due</span><span>$50.00</span></div>
+        <button class="w-full py-2 rounded-xl bg-[var(--orange)] text-white">Pay balance</button>
+      </div>
+    </section>
+
+    <!-- GUEST PANEL -->
+    <section id="guest" class="tab-panel hidden">
+      <div class="bg-white rounded-3xl shadow-xl p-6 space-y-6">
+        <h2 class="text-lg font-semibold text-center">Guest RSVP</h2>
+        <img src="x.jpg" class="rounded-xl w-full" alt="Party banner" />
+        
+        <!-- Timeline -->
+        <div class="relative">
+          <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-[var(--orange-light)]"></div>
+          <div class="space-y-6 relative">
+            <div class="flex gap-4 items-start">
+              <div class="w-2 h-2 rounded-full bg-[var(--orange)] mt-2 relative z-10"></div>
+              <div>
+                <div class="font-medium">2:00 PM - Arrival</div>
+                <div class="text-sm text-gray-600">Check in at the front desk</div>
+              </div>
+            </div>
+            <div class="flex gap-4 items-start">
+              <div class="w-2 h-2 rounded-full bg-[var(--orange)] mt-2 relative z-10"></div>
+              <div>
+                <div class="font-medium">2:15 PM - Welcome & Safety Brief</div>
+                <div class="text-sm text-gray-600">Get ready for fun!</div>
+              </div>
+            </div>
+            <div class="flex gap-4 items-start">
+              <div class="w-2 h-2 rounded-full bg-[var(--orange)] mt-2 relative z-10"></div>
+              <div>
+                <div class="font-medium">2:30 PM - Activities Begin</div>
+                <div class="text-sm text-gray-600">Games, climbing, and more</div>
+              </div>
+            </div>
+            <div class="flex gap-4 items-start">
+              <div class="w-2 h-2 rounded-full bg-[var(--orange)] mt-2 relative z-10"></div>
+              <div>
+                <div class="font-medium">3:30 PM - Cake & Refreshments</div>
+                <div class="text-sm text-gray-600">Celebration time!</div>
+              </div>
+            </div>
+            <div class="flex gap-4 items-start">
+              <div class="w-2 h-2 rounded-full bg-[var(--orange)] mt-2 relative z-10"></div>
+              <div>
+                <div class="font-medium">4:00 PM - Wrap Up</div>
+                <div class="text-sm text-gray-600">Time to say goodbye</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Location Map -->
+        <div class="space-y-2">
+          <h3 class="font-medium">Location</h3>
+          <div class="rounded-xl overflow-hidden shadow-sm border">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.0679167817813!2d-122.41941674847465!3d37.77492797975892!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085809c6c8f4459%3A0xb10ed6d9b5050fa5!2sKids%20Party%20Space!5e0!3m2!1sen!2sus!4v1679TBD"
+              width="100%"
+              height="200"
+              style="border:0;"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              class="w-full"
+            ></iframe>
+          </div>
+          <div class="text-sm text-gray-600">
+            <div>Kids Party Space</div>
+            <div>123 Fun Street</div>
+            <div>San Francisco, CA 94103</div>
+          </div>
+        </div>
+
+        <div class="space-y-3 text-sm">
+          <div class="flex gap-3">
+            <button onclick="openRSVPModal('yes')" class="flex-1 py-2 rounded-xl bg-[var(--blue)] text-white">Yes</button>
+            <button onclick="openRSVPModal('maybe')" class="flex-1 py-2 rounded-xl bg-yellow-500 text-white">Maybe</button>
+            <button onclick="openRSVPModal('no')" class="flex-1 py-2 rounded-xl bg-red-400 text-white">No</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- RSVP Modal -->
+      <div id="rsvpModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-2xl w-full max-w-md mx-4 overflow-hidden">
+          <!-- Progress bar -->
+          <div class="h-1 bg-[var(--gray)]">
+            <div id="progressBar" class="h-1 bg-[var(--orange)] transition-all duration-300" style="width: 20%"></div>
+          </div>
+          
+          <!-- Step content -->
+          <div class="p-6">
+            <div class="steps-container">
+              <!-- Step 1: Parent Info -->
+              <div class="step" data-step="1">
+                <h3 class="text-lg font-semibold mb-4">Your Information</h3>
+                <input type="text" class="w-full border rounded-lg px-3 py-2 mb-3" placeholder="Your full name">
+                <input type="email" class="w-full border rounded-lg px-3 py-2" placeholder="Your email">
+                <!-- pre filled phone number (we get it from the parent)-->
+                <input type="tel" class="w-full border rounded-lg px-3 py-2" value="123-456-7890" placeholder="Your phone number"> 
+              </div>
+
+              <!-- Step 2: Child Info -->
+              <div class="step hidden" data-step="2">
+                <h3 class="text-lg font-semibold mb-4">Child's Information</h3>
+                <input type="text" class="w-full border rounded-lg px-3 py-2 mb-3" placeholder="Child's full name">
+                <div class="mb-3">
+                  <label class="block text-sm text-gray-600 mb-1">Date of birth</label>
+                  <input type="date" class="w-full border rounded-lg px-3 py-2">
+                </div>
+              </div>
+
+              <!-- Step 3: Health Info -->
+              <div class="step hidden" data-step="3">
+                <h3 class="text-lg font-semibold mb-4">Health Information</h3>
+                <div class="mb-3">
+                  <label class="block text-sm text-gray-600 mb-1">Does your child have any allergies?</label>
+                  <textarea class="w-full border rounded-lg px-3 py-2 h-20" placeholder="Please list any allergies (food, medical, etc.)"></textarea>
+                </div>
+                <div class="mb-3">
+                  <label class="block text-sm text-gray-600 mb-1">Any other health concerns?</label>
+                  <textarea class="w-full border rounded-lg px-3 py-2 h-20" placeholder="Please list any other health concerns or special needs"></textarea>
+                </div>
+              </div>
+
+              <!-- Step 4: Emergency Contact -->
+              <div class="step hidden" data-step="4">
+                <h3 class="text-lg font-semibold mb-4">Emergency Contact</h3>
+                <!-- add option for "I am the emergency contact"-->
+                <label class="flex items-center gap-2">
+                  <input type="checkbox" class="accent-[var(--orange)]">
+                  <span>I am the emergency contact</span>
+                </label>
+                <!-- if not, fill in the emergency contact info-->
+                <input type="text" class="w-full border rounded-lg px-3 py-2 mb-3" placeholder="Emergency contact name">
+                <input type="tel" class="w-full border rounded-lg px-3 py-2 mb-3" placeholder="Emergency contact phone">
+                <input type="text" class="w-full border rounded-lg px-3 py-2" placeholder="Relationship to child">
+              </div>
+
+              <!-- Step 5: Review -->
+              <div class="step hidden" data-step="5">
+                <h3 class="text-lg font-semibold mb-4">Review & Confirm</h3>
+                <div class="text-sm space-y-2">
+                  <p>Please review your information and confirm that everything is correct.</p>
+                  <label class="flex items-center gap-2">
+                    <input type="checkbox" class="accent-[var(--orange)]">
+                    <span>I confirm all information is correct</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Navigation buttons -->
+            <div class="flex gap-3 mt-6">
+              <button id="prevBtn" onclick="prevStep()" class="flex-1 py-2 rounded-xl border border-gray-200 text-gray-600 hidden">Back</button>
+              <button id="nextBtn" onclick="nextStep()" class="flex-1 py-2 rounded-xl bg-[var(--orange)] text-white">Next</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROVIDER PANEL -->
+    <section id="provider" class="tab-panel hidden">
+      <div class="bg-white rounded-3xl shadow-xl p-6 space-y-6">
+        <h2 class="text-lg font-semibold text-center">Provider Dashboard</h2>
+        <!-- Roster -->
+        <table class="w-full text-xs">
+          <thead class="text-left text-gray-500"><tr><th>Child</th><th class="text-center">RSVP</th><th class="text-center">Waiver</th><th class="text-center">Lead?</th></tr></thead>
+          <tbody class="divide-y text-gray-700">
+            <tr><td>Olivia Parker</td><td class="text-center text-green-600">Yes</td><td class="text-center text-green-600">✔︎</td><td class="text-center"><input type="checkbox" class="accent-[var(--orange)]"></td></tr>
+            <tr><td>Jack Taylor</td><td class="text-center text-yellow-500">Maybe</td><td class="text-center text-gray-400">—</td><td class="text-center"><input type="checkbox" class="accent-[var(--orange)]"></td></tr>
+          </tbody>
+        </table>
+        <!-- Actions -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <button class="py-2 rounded-xl bg-[var(--orange)] text-white">Send RSVP reminder</button>
+          <button class="py-2 rounded-xl bg-[var(--blue)] text-white">Send tip prompt</button>
+        </div>
+        <!-- Revenue quick stat -->
+        <div class="text-sm text-center pt-4 border-t"><span class="font-medium">Projected revenue:</span> $420</div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded',()=>{
+      const buttons=document.querySelectorAll('.tab-btn');
+      const panels=document.querySelectorAll('.tab-panel');
+      const open=id=>{panels.forEach(p=>p.classList.toggle('hidden',p.id!==id));buttons.forEach(b=>b.classList.toggle('ring-2',b.dataset.tab===id));};
+      buttons.forEach(b=>b.addEventListener('click',()=>open(b.dataset.tab)));
+      open('parent');
+
+      // copy invite link
+      const copyBtn=document.getElementById('copyLink');
+      if(copyBtn){copyBtn.addEventListener('click',()=>{navigator.clipboard.writeText(document.getElementById('inviteLink').value);copyBtn.textContent='Copied!';setTimeout(()=>copyBtn.textContent='Copy',1500);});}
+    });
+
+    // RSVP Modal Functionality
+    let currentStep = 1;
+    const totalSteps = 5;
+    let rsvpStatus = '';
+
+    function openRSVPModal(status) {
+      rsvpStatus = status;
+      document.getElementById('rsvpModal').classList.remove('hidden');
+      updateStep();
+    }
+
+    function closeRSVPModal() {
+      document.getElementById('rsvpModal').classList.add('hidden');
+      currentStep = 1;
+      updateStep();
+    }
+
+    function updateStep() {
+      // Update progress bar
+      document.getElementById('progressBar').style.width = `${(currentStep / totalSteps) * 100}%`;
+      
+      // Show/hide steps
+      document.querySelectorAll('.step').forEach(step => {
+        step.classList.toggle('hidden', parseInt(step.dataset.step) !== currentStep);
+      });
+
+      // Update buttons
+      document.getElementById('prevBtn').classList.toggle('hidden', currentStep === 1);
+      const nextBtn = document.getElementById('nextBtn');
+      nextBtn.textContent = currentStep === totalSteps ? 'Submit' : 'Next';
+    }
+
+    function nextStep() {
+      if (currentStep === totalSteps) {
+        // Handle form submission
+        closeRSVPModal();
+        return;
+      }
+      currentStep = Math.min(currentStep + 1, totalSteps);
+      updateStep();
+    }
+
+    function prevStep() {
+      currentStep = Math.max(currentStep - 1, 1);
+      updateStep();
+    }
+
+    // Close modal when clicking outside
+    document.getElementById('rsvpModal').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('rsvpModal')) {
+        closeRSVPModal();
+      }
+    });
+  </script>
+</body>
+</html>
