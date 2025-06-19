@@ -62,17 +62,98 @@
           </tbody>
         </table>
         <!-- Add‑ons quick picker -->
-        <details class="border rounded-lg p-3">
+        <details class="border rounded-lg p-4">
           <summary class="cursor-pointer text-sm font-medium">Add‑ons & Upgrades</summary>
           <div class="mt-3 space-y-2 text-sm">
-            <label class="flex justify-between items-center"><span>Balloon Bundle</span><input type="checkbox" class="accent-[var(--orange)]"></label>
-            <label class="flex justify-between items-center"><span>Photographer</span><input type="checkbox" class="accent-[var(--orange)]"></label>
-            <label class="flex justify-between items-center"><span>Extra 30 min play</span><input type="checkbox" class="accent-[var(--orange)]"></label>
+            <label class="flex justify-between items-center">
+              <div>
+                <span>Balloon Bundle</span>
+                <span class="text-xs text-gray-500 ml-2">$49</span>
+              </div>
+              <input type="checkbox" class="accent-[var(--orange)]" onchange="updateTotal()" data-price="49" name="addon">
+            </label>
+            <label class="flex justify-between items-center">
+              <div>
+                <span>Photographer</span>
+                <span class="text-xs text-gray-500 ml-2">$149</span>
+              </div>
+              <input type="checkbox" class="accent-[var(--orange)]" onchange="updateTotal()" data-price="149" name="addon">
+            </label>
+            <label class="flex justify-between items-center">
+              <div>
+                <span>Extra 30 min play</span>
+                <span class="text-xs text-gray-500 ml-2">$79</span>
+              </div>
+              <input type="checkbox" class="accent-[var(--orange)]" onchange="updateTotal()" data-price="79" name="addon">
+            </label>
+            <div class="text-xs text-gray-500 mt-4">
+              <span class="font-medium text-[var(--orange)]">Multi-item discount:</span>
+              <ul class="mt-1 space-y-1 pl-4">
+                <li>• 2 add-ons: 10% off add-ons</li>
+                <li>• 3+ add-ons: 15% off add-ons</li>
+              </ul>
+            </div>
           </div>
         </details>
         <!-- Balance -->
-        <div class="flex justify-between text-sm font-medium"><span>Total Due</span><span>$50.00</span></div>
+        <div class="flex justify-between text-sm font-medium">
+          <span>Base Package</span>
+          <span>$299.00</span>
+        </div>
+        <div id="addonsTotal" class="flex justify-between text-sm text-[var(--orange)] hidden">
+          <span>Add-ons Subtotal</span>
+          <span>$0.00</span>
+        </div>
+        <div id="discount" class="flex justify-between text-sm text-green-600 hidden">
+          <span>Multi-item Discount</span>
+          <span>-$0.00</span>
+        </div>
+        <div class="flex justify-between text-sm font-medium">
+          <span>Total Due</span>
+          <span id="totalDue">$299.00</span>
+        </div>
         <button class="w-full py-2 rounded-xl bg-[var(--orange)] text-white">Pay balance</button>
+
+        <script>
+          function updateTotal() {
+            const basePrice = 299;
+            const addons = document.querySelectorAll('input[name="addon"]:checked');
+            const addonsTotal = Array.from(addons).reduce((sum, addon) => sum + Number(addon.dataset.price), 0);
+            
+            // Calculate discount
+            let discount = 0;
+            if (addons.length >= 3) {
+              discount = addonsTotal * 0.15; // 15% off for 3+ items
+            } else if (addons.length === 2) {
+              discount = addonsTotal * 0.10; // 10% off for 2 items
+            }
+            
+            // Update UI
+            const addonsTotalElement = document.getElementById('addonsTotal');
+            const discountElement = document.getElementById('discount');
+            const totalDueElement = document.getElementById('totalDue');
+            
+            if (addonsTotal > 0) {
+              addonsTotalElement.classList.remove('hidden');
+              addonsTotalElement.querySelector('span:last-child').textContent = `$${addonsTotal.toFixed(2)}`;
+            } else {
+              addonsTotalElement.classList.add('hidden');
+            }
+            
+            if (discount > 0) {
+              discountElement.classList.remove('hidden');
+              discountElement.querySelector('span:last-child').textContent = `-$${discount.toFixed(2)}`;
+            } else {
+              discountElement.classList.add('hidden');
+            }
+            
+            const total = basePrice + addonsTotal - discount;
+            totalDueElement.textContent = `$${total.toFixed(2)}`;
+          }
+          
+          // Initialize total
+          updateTotal();
+        </script>
       </div>
 
       <!-- Invite Modal -->
