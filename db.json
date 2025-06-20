@@ -1,0 +1,168 @@
+{
+  "parties": [
+    {
+      "id": 1,
+      "date": "2024-03-23",
+      "name": "Jackson's 6th Birthday",
+      "time": "2:00 PM",
+      "guests": {
+        "confirmed": 12,
+        "invited": 15,
+        "maybe": 2,
+        "declined": 1
+      },
+      "package": {
+        "name": "Adventure Plus",
+        "basePrice": 299,
+        "addOns": 150,
+        "extraTime": 50
+      },
+      "status": "Ready",
+      "statusColor": "green",
+      "waiversComplete": true,
+      "paymentStatus": "Paid",
+      "details": {
+        "child": "Jackson",
+        "age": 6,
+        "datetime": "Mar 23, 2:00 PM",
+        "specialRequirements": {
+          "allergies": "Peanuts (2 guests), Dairy (1 guest)",
+          "accessibility": "Wheelchair access needed for one parent",
+          "requests": "Superhero-themed decorations, Gluten-free cake option"
+        },
+        "parent": {
+          "name": "Sarah Johnson",
+          "phone": "+1 (555) 123-4567",
+          "email": "sarah.j@email.com"
+        },
+        "staff": [
+          { "name": "John Doe", "role": "Lead", "initials": "JD" },
+          { "name": "Amy Smith", "role": "", "initials": "AS" }
+        ],
+        "revenue": {
+          "estimatedTips": 75,
+          "photoPackage": 49
+        }
+      },
+      "notes": [
+        {
+          "author": "John Doe",
+          "initials": "JD",
+          "timestamp": "Mar 22, 10:30 AM",
+          "category": "Setup",
+          "categoryColor": "green",
+          "text": "Confirmed all decorations are in stock. Will need extra time for balloon arch setup."
+        },
+        {
+          "author": "Mike Miller",
+          "initials": "MM",
+          "timestamp": "Mar 21, 2:15 PM",
+          "category": "Planning",
+          "categoryColor": "blue",
+          "text": "Parent requested superhero-themed plates and napkins. Added to inventory order."
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "date": "2024-03-23",
+      "name": "Emma's Princess Party",
+      "time": "4:30 PM",
+      "guests": {
+        "confirmed": 8,
+        "invited": 10,
+        "maybe": 1,
+        "declined": 1
+      },
+      "package": {
+        "name": "Royal Package",
+        "basePrice": 399,
+        "addOns": 50,
+        "extraTime": 0
+      },
+      "status": "Needs Setup",
+      "statusColor": "yellow",
+      "waiversComplete": true,
+      "paymentStatus": "Paid",
+      "details": {
+        "child": "Emma",
+        "age": 5,
+        "datetime": "Mar 23, 4:30 PM",
+        "specialRequirements": {
+          "allergies": "None",
+          "accessibility": "None",
+          "requests": "Extra pink decorations"
+        },
+        "parent": {
+          "name": "Emily White",
+          "phone": "+1 (555) 987-6543",
+          "email": "emily.w@email.com"
+        },
+        "staff": [
+          { "name": "Jane Roe", "role": "Lead", "initials": "JR" }
+        ],
+        "revenue": {
+          "estimatedTips": 60,
+          "photoPackage": 0
+        }
+      },
+      "notes": []
+    },
+    {
+      "id": 3,
+      "date": "2024-03-24",
+      "name": "Lucas' Superhero Party",
+      "time": "1:00 PM",
+      "guests": {
+        "confirmed": 15,
+        "invited": 20,
+        "maybe": 0,
+        "declined": 5
+      },
+      "package": {
+        "name": "Hero Ultimate",
+        "basePrice": 499,
+        "addOns": 200,
+        "extraTime": 100
+      },
+      "status": "Draft",
+      "statusColor": "purple",
+      "waiversComplete": false,
+      "paymentStatus": "Partial",
+      "details": {
+        "child": "Lucas",
+        "age": 7,
+        "datetime": "Mar 24, 1:00 PM",
+        "specialRequirements": {
+          "allergies": "Gluten-free cake needed",
+          "accessibility": "None",
+          "requests": "Spiderman theme"
+        },
+        "parent": {
+          "name": "Michael Brown",
+          "phone": "+1 (555) 111-2222",
+          "email": "michael.b@email.com"
+        },
+        "staff": [],
+        "revenue": {
+          "estimatedTips": 100,
+          "photoPackage": 100
+        }
+      },
+      "notes": []
+    }
+  ],
+  "analytics": {
+    "bookingRate": 82,
+    "pricingSuggestion": 350,
+    "tipPerformance": 18
+  },
+  "calendar": {
+    "March": {
+      "23": "booked",
+      "24": "tentative",
+      "30": "booked",
+      "31": "available"
+    }
+  }
+} 

@@ -21,6 +21,7 @@
     <button data-tab="parent"   class="tab-btn rounded-full px-5 py-2 text-sm font-medium shadow bg-white">Parent</button>
     <button data-tab="guest"    class="tab-btn rounded-full px-5 py-2 text-sm font-medium shadow bg-white">Guest</button>
     <button data-tab="provider" class="tab-btn rounded-full px-5 py-2 text-sm font-medium shadow bg-white">Provider</button>
+    <button data-tab="after-party" class="tab-btn rounded-full px-5 py-2 text-sm font-medium shadow bg-white">Parent - After Party</button>
   </div>
 
   <!-- PANELS -->
@@ -441,7 +442,7 @@
           <div class="absolute inset-0 flex flex-col items-center justify-center text-white p-6 text-center">
             <div class="text-3xl font-bold mb-2">Jackson's 6th Birthday!</div>
             <div class="text-lg mb-1">Join us for an amazing adventure</div>
-            <div class="text-sm opacity-90">Saturday, March 23rd</div>
+            <div class="text-sm opacity-90">Saturday, July 5th, 2025</div>
           </div>
         </div>
         
@@ -472,21 +473,19 @@
           <div class="bg-[var(--gray)] rounded-xl p-4">
             <div class="flex items-center gap-4">
               <!-- Weather icon -->
-              <div class="w-14 h-14 flex items-center justify-center bg-white rounded-xl shadow-sm">
-                <svg class="w-8 h-8 text-[var(--orange)]" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 3v2m0 14v2M5.64 5.64l1.41 1.41m10.3 10.3 1.41 1.41M3 12h2m14 0h2M5.64 18.36l1.41-1.41m10.3-10.3 1.41-1.41M12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10z"/>
-                </svg>
+              <div id="weather-icon-container" class="w-14 h-14 flex items-center justify-center bg-white rounded-xl shadow-sm">
+                <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
               </div>
               <!-- Weather details -->
               <div class="flex-1">
-                <div class="text-lg font-medium">72°F</div>
-                <div class="text-sm text-gray-600">Sunny</div>
-                <div class="text-xs text-gray-500">Saturday, March 23rd</div>
+                <div id="weather-temp" class="text-lg font-medium">--°F</div>
+                <div id="weather-desc" class="text-sm text-gray-600">Loading...</div>
+                <div id="weather-date" class="text-xs text-gray-500"></div>
               </div>
               <!-- Additional info -->
               <div class="text-right text-sm text-gray-600">
-                <div>Humidity: 65%</div>
-                <div>Wind: 8 mph</div>
+                <div id="weather-humidity">Humidity: --%</div>
+                <div id="weather-wind">Wind: -- mph</div>
               </div>
             </div>
             <div class="mt-3 pt-3 border-t text-xs text-gray-500">
@@ -1060,17 +1059,22 @@
                   <div class="space-y-3 text-sm">
                     <div>
                       <div class="font-medium text-red-600">Allergies</div>
-                      <div>Peanuts (2 guests), Dairy (1 guest)</div>
+                      <div class="allergies-info">Peanuts (2 guests), Dairy (1 guest)</div>
                     </div>
                     <div>
                       <div class="font-medium text-blue-600">Accessibility</div>
-                      <div>Wheelchair access needed for one parent</div>
+                      <div class="accessibility-info">Wheelchair access needed for one parent</div>
                     </div>
                     <div>
                       <div class="font-medium text-purple-600">Special Requests</div>
-                      <div>Superhero-themed decorations, Gluten-free cake option</div>
+                      <div class="requests-info">Superhero-themed decorations, Gluten-free cake option</div>
                     </div>
                   </div>
+                </div>
+
+                <!-- Weather Forecast -->
+                <div id="weather-forecast" class="border rounded-lg p-4">
+                  <div class="text-sm text-gray-500">Loading weather forecast...</div>
                 </div>
               </div>
 
@@ -1220,6 +1224,171 @@
         </div>
       </div>
     </section>
+
+    <!-- PARENT - AFTER PARTY PANEL -->
+    <section id="after-party" class="tab-panel hidden">
+      <div class="bg-white rounded-3xl shadow-xl p-6 space-y-6">
+        <h2 class="text-lg font-semibold text-center">Party Memories</h2>
+        
+        <!-- Hero Banner -->
+        <div class="relative h-48 rounded-xl overflow-hidden">
+          <img src="x.jpg" class="absolute inset-0 w-full h-full object-cover" alt="Party banner" />
+          <div class="absolute inset-0 bg-gradient-to-b from-black/30 to-black/60"></div>
+          <div class="absolute inset-0 flex flex-col items-center justify-center text-white p-6 text-center">
+            <div class="text-3xl font-bold mb-2">Jackson's 6th Birthday!</div>
+            <div class="text-lg mb-1">What an amazing celebration!</div>
+            <div class="text-sm opacity-90">Saturday, July 5th, 2025</div>
+          </div>
+        </div>
+
+        <!-- Photo Gallery -->
+        <div class="space-y-4">
+          <div class="flex justify-between items-center">
+            <h3 class="font-medium">Party Photos</h3>
+            <button onclick="downloadAllPhotos()" class="px-4 py-2 bg-[var(--blue)] text-white rounded-lg text-sm">
+              Download All (24 photos)
+            </button>
+          </div>
+          
+          <!-- Photo Grid -->
+          <div class="grid grid-cols-3 gap-3">
+            <div class="aspect-square bg-gray-100 rounded-lg overflow-hidden cursor-pointer hover:opacity-80 transition-opacity" onclick="viewPhoto(1)">
+              <img src="1.jpg" class="w-full h-full object-cover" alt="Party photo 1" />
+            </div>
+            <div class="aspect-square bg-gray-100 rounded-lg overflow-hidden cursor-pointer hover:opacity-80 transition-opacity" onclick="viewPhoto(3)">
+              <img src="3.jpg" class="w-full h-full object-cover" alt="Party photo 3" />
+            </div>
+            <div class="aspect-square bg-gray-100 rounded-lg overflow-hidden cursor-pointer hover:opacity-80 transition-opacity" onclick="viewPhoto(5)">
+              <img src="5.jpg" class="w-full h-full object-cover" alt="Party photo 5" />
+            </div>
+            <div class="aspect-square bg-gray-100 rounded-lg overflow-hidden cursor-pointer hover:opacity-80 transition-opacity" onclick="viewPhoto(2)">
+              <img src="2.jpg" class="w-full h-full object-cover" alt="Party photo 2" />
+            </div>
+            <div class="aspect-square bg-gray-100 rounded-lg overflow-hidden cursor-pointer hover:opacity-80 transition-opacity" onclick="viewPhoto(7)">
+              <img src="7.jpg" class="w-full h-full object-cover" alt="Party photo 7" />
+            </div>
+            <div class="aspect-square bg-gray-100 rounded-lg overflow-hidden cursor-pointer hover:opacity-80 transition-opacity" onclick="viewPhoto(4)">
+              <img src="4.jpg" class="w-full h-full object-cover" alt="Party photo 4" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Party Highlights -->
+        <div class="border rounded-xl p-4">
+          <h3 class="font-medium mb-3">Party Highlights</h3>
+          <div class="space-y-3 text-sm">
+            <div class="flex items-center gap-2">
+              <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+              <span>15 happy guests attended</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+              <span>Superhero theme was a huge hit!</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="w-2 h-2 bg-purple-500 rounded-full"></div>
+              <span>Birthday cake was delicious</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="w-2 h-2 bg-orange-500 rounded-full"></div>
+              <span>All activities completed successfully</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Downloads & Memories -->
+        <div class="grid grid-cols-2 gap-4">
+          <div class="border rounded-xl p-4">
+            <h3 class="font-medium mb-3">Downloads</h3>
+            <div class="space-y-2">
+              <button onclick="downloadItem('photos')" class="w-full flex items-center gap-2 px-3 py-2 border rounded-lg text-sm hover:bg-gray-50">
+                <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                </svg>
+                Photo Album (24 photos)
+              </button>
+              <button onclick="downloadItem('video')" class="w-full flex items-center gap-2 px-3 py-2 border rounded-lg text-sm hover:bg-gray-50">
+                <svg class="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                </svg>
+                Party Video (3:45 min)
+              </button>
+              <button onclick="downloadItem('certificate')" class="w-full flex items-center gap-2 px-3 py-2 border rounded-lg text-sm hover:bg-gray-50">
+                <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                </svg>
+                Birthday Certificate
+              </button>
+            </div>
+          </div>
+
+          <div class="border rounded-xl p-4">
+            <h3 class="font-medium mb-3">Share Memories</h3>
+            <div class="space-y-2">
+              <button onclick="shareMemories('social')" class="w-full flex items-center gap-2 px-3 py-2 border rounded-lg text-sm hover:bg-gray-50">
+                <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"/>
+                </svg>
+                Share on Social Media
+              </button>
+              <button onclick="shareMemories('email')" class="w-full flex items-center gap-2 px-3 py-2 border rounded-lg text-sm hover:bg-gray-50">
+                <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                </svg>
+                Email to Guests
+              </button>
+              <button onclick="shareMemories('print')" class="w-full flex items-center gap-2 px-3 py-2 border rounded-lg text-sm hover:bg-gray-50">
+                <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
+                </svg>
+                Print Photo Book
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Thank You Message -->
+        <div class="bg-gradient-to-r from-[var(--orange)] to-[var(--orange-light)] rounded-xl p-6 text-white">
+          <h3 class="font-medium mb-2">Thank You!</h3>
+          <p class="text-sm opacity-90 mb-4">
+            We had an amazing time celebrating Jackson's 6th birthday with you! 
+            Thank you for choosing us to make this day special. We hope you enjoy 
+            these memories for years to come.
+          </p>
+          <button onclick="leaveReview()" class="px-4 py-2 bg-white text-[var(--orange)] rounded-lg text-sm font-medium">
+            Leave a Review
+          </button>
+        </div>
+
+        <!-- Next Steps -->
+        <div class="border rounded-xl p-4">
+          <h3 class="font-medium mb-3">What's Next?</h3>
+          <div class="space-y-3 text-sm">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-full bg-[var(--blue)] flex items-center justify-center text-white text-xs font-medium">1</div>
+              <div>
+                <div class="font-medium">Download your photos</div>
+                <div class="text-gray-500">Available for 30 days</div>
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-full bg-[var(--green)] flex items-center justify-center text-white text-xs font-medium">2</div>
+              <div>
+                <div class="font-medium">Share with family & friends</div>
+                <div class="text-gray-500">Send the photo album link</div>
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-full bg-[var(--orange)] flex items-center justify-center text-white text-xs font-medium">3</div>
+              <div>
+                <div class="font-medium">Book next year's party</div>
+                <div class="text-gray-500">Early booking gets 10% off</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 
   <script>
@@ -1241,10 +1410,10 @@
         window.history.pushState({}, '', url);
       }));
 
-      // Check URL parameters for initial tab
+      // Check for tab parameter in URL
       const urlParams = new URLSearchParams(window.location.search);
       const tabParam = urlParams.get('tab');
-      if (tabParam && ['guest', 'parent', 'provider'].includes(tabParam)) {
+      if (tabParam && ['parent', 'guest', 'provider', 'after-party'].includes(tabParam)) {
         open(tabParam);
       } else {
         open('parent'); // Default tab
@@ -1258,7 +1427,88 @@
       if (document.getElementById('provider')) {
         initializeProviderDashboard();
       }
+
+      if (tabParam === 'guest') {
+        fetchWeather();
+      }
+
+      // Fetch weather if guest tab is clicked
+      document.querySelector('button[data-tab="guest"]').addEventListener('click', fetchWeather);
     });
+
+    async function fetchWeather() {
+      const lat = 37.77;
+      const lon = -122.42;
+      const partyDate = '2025-07-05';
+      const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,relative_humidity_2m_mean,wind_speed_10m_max,weather_code&start_date=${partyDate}&end_date=${partyDate}&temperature_unit=fahrenheit&wind_speed_unit=mph`;
+
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        renderWeather(data, partyDate);
+      } catch (error) {
+        console.error("Could not fetch weather data:", error);
+        document.getElementById('weather-desc').textContent = 'Could not load weather';
+        document.getElementById('weather-temp').textContent = '--°F';
+      }
+    }
+
+    function renderWeather(data, dateString) {
+        const temp = Math.round(data.daily.temperature_2m_max[0]);
+        const humidity = Math.round(data.daily.relative_humidity_2m_mean[0]);
+        const wind = Math.round(data.daily.wind_speed_10m_max[0]);
+        const weatherCode = data.daily.weather_code[0];
+        const { description, icon } = getWeatherInfo(weatherCode);
+
+        // Use a specific time to avoid timezone-off-by-one errors
+        const date = new Date(dateString + 'T12:00:00');
+        const formattedDate = date.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+
+        document.getElementById('weather-temp').textContent = `${temp}°F`;
+        document.getElementById('weather-desc').textContent = description;
+        document.getElementById('weather-icon-container').innerHTML = icon;
+        document.getElementById('weather-date').textContent = formattedDate;
+        document.getElementById('weather-humidity').textContent = `Humidity: ${humidity}%`;
+        document.getElementById('weather-wind').textContent = `Wind: ${wind} mph`;
+    }
+
+    function getWeatherInfo(code) {
+      const descriptions = {
+        0: 'Clear sky', 1: 'Mainly clear', 2: 'Partly cloudy', 3: 'Overcast',
+        45: 'Fog', 48: 'Depositing rime fog',
+        51: 'Light drizzle', 53: 'Moderate drizzle', 55: 'Dense drizzle',
+        56: 'Light freezing drizzle', 57: 'Dense freezing drizzle',
+        61: 'Slight rain', 63: 'Moderate rain', 65: 'Heavy rain',
+        66: 'Light freezing rain', 67: 'Heavy freezing rain',
+        71: 'Slight snow fall', 73: 'Moderate snow fall', 75: 'Heavy snow fall',
+        77: 'Snow grains',
+        80: 'Slight rain showers', 81: 'Moderate rain showers', 82: 'Violent rain showers',
+        85: 'Slight snow showers', 86: 'Heavy snow showers',
+        95: 'Thunderstorm', 96: 'Thunderstorm with hail', 99: 'Thunderstorm with heavy hail'
+      };
+      
+      const icons = {
+        'clear': '<svg class="w-8 h-8 text-[var(--orange)]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3v2m0 14v2M5.64 5.64l1.41 1.41m10.3 10.3 1.41 1.41M3 12h2m14 0h2M5.64 18.36l1.41-1.41m10.3-10.3 1.41-1.41M12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10z"/></svg>',
+        'cloudy': '<svg class="w-8 h-8 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path></svg>',
+        'rain': '<svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 10-4 10a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15m0 0v2m0-2h12m0 0v2"></path></svg>',
+        'snow': '<svg class="w-8 h-8 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 22V12m0-4.5a3.5 3.5 0 00-7 0m7 0a3.5 3.5 0 01-7 0M13 12L5.5 5.5M13 12l7.5-6.5M5.5 5.5L13 12m-7.5 6.5L13 12M5.5 18.5l7.5-6.5m-7.5 6.5l7.5-6.5m0-13l-7.5 6.5M20.5 18.5L13 12"></path></svg>',
+        'thunderstorm': '<svg class="w-8 h-8 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>'
+      };
+
+      let iconType = 'cloudy';
+      if (code <= 1) iconType = 'clear';
+      if (code >= 51 && code <= 67 || code >= 80 && code <= 82) iconType = 'rain';
+      if (code >= 71 && code <= 77 || code >= 85 && code <= 86) iconType = 'snow';
+      if (code >= 95) iconType = 'thunderstorm';
+
+      return {
+        description: descriptions[code] || 'No data',
+        icon: icons[iconType]
+      };
+    }
 
     // RSVP Modal Functionality
     let currentStep = 1;
@@ -1669,6 +1919,247 @@
       // Open the modal and handle the response
       openRSVPModal(response);
     }
+
+    function createPartyCard(party) {
+        const card = document.createElement('div');
+        card.className = 'party-card border rounded-xl p-4 hover:shadow-md transition-shadow';
+        card.dataset.partyId = party.id;
+
+        const paymentIcon = party.paymentStatus === 'Partial' ? 
+            `<div class="w-8 h-8 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-600" title="Partial payment">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>` : '';
+        
+        const waiverIcon = !party.waiversComplete ?
+            `<div class="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center text-red-600" title="No waivers yet">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </div>` : '';
+
+        // Format the date
+        const partyDate = new Date(party.date);
+        const formattedDate = partyDate.toLocaleDateString('en-US', { 
+          weekday: 'short', 
+          month: 'short', 
+          day: 'numeric' 
+        });
+
+        // Weather placeholder - will be populated after fetch
+        const weatherId = `weather-${party.id}`;
+
+        card.innerHTML = `
+          <div class="flex items-start gap-4">
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="party-name font-medium">${party.name}</span>
+                <span class="bg-[var(--blue)] text-white text-xs px-2 py-0.5 rounded-full">${party.time}</span>
+                <span class="text-xs text-gray-500">${formattedDate}</span>
+                <div id="${weatherId}" class="flex items-center gap-1 text-xs text-gray-600">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                  <span>--°F</span>
+                </div>
+              </div>
+              <div class="grid grid-cols-3 gap-6 mb-4">
+                <div class="text-sm">
+                  <div class="text-gray-500">Guests</div>
+                  <div>${party.guests.confirmed} confirmed</div>
+                </div>
+                <div class="text-sm">
+                  <div class="text-gray-500">Package</div>
+                  <div>${party.package.name}</div>
+                </div>
+                <div class="text-sm">
+                  <div class="text-gray-500">Status</div>
+                  <div class="text-${party.statusColor}-600">${party.status}</div>
+                </div>
+              </div>
+              <div class="flex gap-2 text-sm">
+                <button class="px-3 py-1 rounded-lg bg-[var(--gray)] text-gray-600">View Details</button>
+                <button class="px-3 py-1 rounded-lg bg-[var(--gray)] text-gray-600">Message Parent</button>
+                <button class="px-3 py-1 rounded-lg bg-[var(--gray)] text-gray-600">Staff Notes</button>
+              </div>
+            </div>
+            <div class="flex gap-2">
+              ${waiverIcon}
+              ${paymentIcon}
+            </div>
+          </div>`;
+        
+        // Fetch weather for this party
+        fetchPartyWeather(party.date, weatherId);
+        
+        return card;
+    }
+
+    async function fetchPartyWeather(date, weatherId) {
+      const lat = 37.77;
+      const lon = -122.42;
+      const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,weather_code&start_date=${date}&end_date=${date}&temperature_unit=fahrenheit`;
+
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        renderPartyWeather(data, weatherId);
+      } catch (error) {
+        console.error("Could not fetch weather data for party:", error);
+      }
+    }
+
+    function renderPartyWeather(data, weatherId) {
+      const temp = Math.round(data.daily.temperature_2m_max[0]);
+      const weatherCode = data.daily.weather_code[0];
+      const { icon } = getWeatherInfo(weatherCode);
+      
+      const weatherElement = document.getElementById(weatherId);
+      if (weatherElement) {
+        weatherElement.innerHTML = `
+          ${icon}
+          <span>${temp}°F</span>
+        `;
+      }
+    }
+
+    function showPartyDetails(party) {
+      const modal = document.getElementById('partyDetailsModal');
+      modal.classList.remove('hidden');
+      
+      // Populate Modal
+      modal.querySelector('.party-title').textContent = `Party Details - ${party.name}`;
+      modal.querySelector('.party-child').textContent = party.details.child;
+      modal.querySelector('.party-age').textContent = party.details.age;
+      modal.querySelector('.party-datetime').textContent = party.details.datetime;
+      
+      // Package Details
+      const packageTotal = party.package.basePrice + party.package.addOns + party.package.extraTime;
+      modal.querySelector('.package-details .base-price').textContent = `$${party.package.basePrice}`;
+      modal.querySelector('.package-details .addons-price').textContent = `+ $${party.package.addOns}`;
+      modal.querySelector('.package-details .extra-time-price').textContent = `+ $${party.package.extraTime}`;
+      modal.querySelector('.package-details .total-price').textContent = `$${packageTotal}`;
+      
+      // Guest Status
+      modal.querySelector('.guest-status .invited').textContent = party.guests.invited;
+      modal.querySelector('.guest-status .confirmed').textContent = party.guests.confirmed;
+      modal.querySelector('.guest-status .maybe').textContent = party.guests.maybe;
+      modal.querySelector('.guest-status .declined').textContent = party.guests.declined;
+
+      // Special Requirements
+      modal.querySelector('.allergies-info').textContent = party.details.specialRequirements.allergies;
+      modal.querySelector('.accessibility-info').textContent = party.details.specialRequirements.accessibility;
+      modal.querySelector('.requests-info').textContent = party.details.specialRequirements.requests;
+      
+      // Parent Contact
+      modal.querySelector('.parent-name').textContent = party.details.parent.name;
+      modal.querySelector('.parent-phone').textContent = party.details.parent.phone;
+      modal.querySelector('.parent-email').textContent = party.details.parent.email;
+
+      // Staff
+      const staffContainer = modal.querySelector('.staff-list');
+      staffContainer.innerHTML = '';
+      party.details.staff.forEach(staffMember => {
+        const staffEl = document.createElement('div');
+        staffEl.className = 'flex items-center gap-2';
+        staffEl.innerHTML = `
+          <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+            <span class="text-sm font-medium text-blue-600">${staffMember.initials}</span>
+          </div>
+          <div class="text-sm">${staffMember.name} ${staffMember.role ? `(${staffMember.role})` : ''}</div>
+        `;
+        staffContainer.appendChild(staffEl);
+      });
+
+      // Fetch and display weather forecast
+      fetchDetailedWeather(party.date);
+    }
+
+    async function fetchDetailedWeather(date) {
+      const lat = 37.77;
+      const lon = -122.42;
+      const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,temperature_2m_min,relative_humidity_2m_mean,wind_speed_10m_max,weather_code&start_date=${date}&end_date=${date}&temperature_unit=fahrenheit&wind_speed_unit=mph`;
+
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        renderDetailedWeather(data, date);
+      } catch (error) {
+        console.error("Could not fetch detailed weather data:", error);
+        document.getElementById('weather-forecast').innerHTML = '<div class="text-sm text-gray-500">Weather data unavailable</div>';
+      }
+    }
+
+    function renderDetailedWeather(data, dateString) {
+      const temp = Math.round(data.daily.temperature_2m_max[0]);
+      const tempMin = Math.round(data.daily.temperature_2m_min[0]);
+      const humidity = Math.round(data.daily.relative_humidity_2m_mean[0]);
+      const wind = Math.round(data.daily.wind_speed_10m_max[0]);
+      const weatherCode = data.daily.weather_code[0];
+      const { description, icon } = getWeatherInfo(weatherCode);
+
+      const date = new Date(dateString + 'T12:00:00');
+      const formattedDate = date.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+
+      const weatherForecast = document.getElementById('weather-forecast');
+      weatherForecast.innerHTML = `
+        <div class="border rounded-lg p-4">
+          <div class="text-sm font-medium mb-3">Weather Forecast for ${formattedDate}</div>
+          <div class="flex items-center gap-4 mb-4">
+            <div class="text-3xl font-bold">${temp}°F</div>
+            <div class="text-2xl">${icon}</div>
+            <div class="flex-1">
+              <div class="text-sm font-medium">${description}</div>
+              <div class="text-xs text-gray-500">High: ${temp}°F / Low: ${tempMin}°F</div>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-4 text-sm">
+            <div>
+              <div class="text-gray-500">Humidity</div>
+              <div class="font-medium">${humidity}%</div>
+            </div>
+            <div>
+              <div class="text-gray-500">Wind Speed</div>
+              <div class="font-medium">${wind} mph</div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // --- AFTER PARTY FUNCTIONS ---
+    function downloadAllPhotos() {
+      alert('Starting download of 24 party photos...\nThis may take a few moments.');
+    }
+
+    function viewPhoto(photoId) {
+      alert(`Opening photo ${photoId} in full view`);
+    }
+
+    function downloadItem(type) {
+      const items = {
+        photos: 'Photo album download started...',
+        video: 'Party video download started...',
+        certificate: 'Birthday certificate download started...'
+      };
+      alert(items[type] || 'Download started...');
+    }
+
+    function shareMemories(type) {
+      const actions = {
+        social: 'Opening social media share dialog...',
+        email: 'Opening email composer with photo album link...',
+        print: 'Opening photo book printing options...'
+      };
+      alert(actions[type] || 'Sharing...');
+    }
+
+    function leaveReview() {
+      alert('Opening review form...\nThank you for your feedback!');
+    }
+
+    // --- PROVIDER DASHBOARD FUNCTIONS ---
   </script>
 </body>
 </html>
