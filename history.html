@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commit History - Party Management System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --blue: #3b82f6;
+            --green: #10b981;
+            --orange: #f59e0b;
+            --orange-light: #fbbf24;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen p-4">
+    <div class="max-w-4xl mx-auto">
+        <div class="bg-white rounded-3xl shadow-xl p-6 space-y-6">
+            <h1 class="text-2xl font-bold text-center mb-8">Commit History</h1>
+            
+            <!-- Summary Stats -->
+            <div class="grid grid-cols-3 gap-4 mb-8">
+                <div class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl p-4 text-white text-center">
+                    <div class="text-2xl font-bold" id="total-commits">-</div>
+                    <div class="text-sm opacity-90">Total Commits</div>
+                </div>
+                <div class="bg-gradient-to-r from-green-500 to-green-600 rounded-xl p-4 text-white text-center">
+                    <div class="text-2xl font-bold" id="lines-added">-</div>
+                    <div class="text-sm opacity-90">Lines Added</div>
+                </div>
+                <div class="bg-gradient-to-r from-red-500 to-red-600 rounded-xl p-4 text-white text-center">
+                    <div class="text-2xl font-bold" id="lines-removed">-</div>
+                    <div class="text-sm opacity-90">Lines Removed</div>
+                </div>
+            </div>
+
+            <!-- Commit List -->
+            <div id="commit-list" class="space-y-4">
+                <!-- Commits will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data will be inserted by the script
+        const commitData = [
+            { hash: '80e193e', message: 'Parent - after party, weather', files: 10, added: 674, removed: 15 },
+            { hash: '612e43b', message: 'Viewport', files: 1, added: 1, removed: 1 },
+            { hash: '0b918ad', message: 'Contact import', files: 1, added: 109, removed: 71 },
+            { hash: '4fb41f0', message: 'Contact import', files: 1, added: 124, removed: 2 },
+            { hash: '621643f', message: 'Contact import', files: 1, added: 84, removed: 2 },
+            { hash: '1b81741', message: 'Confetti', files: 1, added: 86, removed: 5 },
+            { hash: '42a406e', message: 'Confetti', files: 1, added: 49, removed: 3 },
+            { hash: 'c6eb099', message: 'First', files: 1, added: 24, removed: 49 },
+            { hash: 'f7e126d', message: 'First', files: 1, added: 49, removed: 24 },
+            { hash: '3786a5b', message: 'First', files: 1, added: 506, removed: 24 },
+            { hash: '6e65c26', message: 'First', files: 1, added: 190, removed: 47 },
+            { hash: '3ac5461', message: 'First', files: 1, added: 205, removed: 16 },
+            { hash: 'a94c02b', message: 'First', files: 1, added: 118, removed: 3 },
+            { hash: '4393b33', message: 'First', files: 1, added: 83, removed: 25 },
+            { hash: 'e940f52', message: 'First', files: 1, added: 1, removed: 1 },
+            { hash: '27b4140', message: 'First', files: 1, added: 1, removed: 1 },
+            { hash: '7d136ab', message: 'First', files: 1, added: 0, removed: 0 }
+        ];
+
+        // Calculate totals
+        let totalCommits = commitData.length;
+        let totalAdded = commitData.reduce((sum, commit) => sum + (commit.added || 0), 0);
+        let totalRemoved = commitData.reduce((sum, commit) => sum + (commit.removed || 0), 0);
+
+        // Populate commit list
+        const commitList = document.getElementById('commit-list');
+        commitData.forEach(commit => {
+            const commitEl = document.createElement('div');
+            commitEl.className = 'border rounded-xl p-4 hover:bg-gray-50 transition-colors';
+            commitEl.innerHTML = `
+                <div class="flex justify-between items-start mb-2">
+                    <div class="font-medium text-sm">${commit.message}</div>
+                    <div class="text-xs text-gray-500">${commit.hash}</div>
+                </div>
+                <div class="flex items-center gap-4 text-xs">
+                    <span class="text-green-600">+${commit.added || 0} lines</span>
+                    <span class="text-red-600">-${commit.removed || 0} lines</span>
+                    <span class="text-gray-500">${commit.files || 0} files changed</span>
+                </div>
+            `;
+            commitList.appendChild(commitEl);
+        });
+
+        // Update summary stats
+        document.getElementById('total-commits').textContent = totalCommits;
+        document.getElementById('lines-added').textContent = totalAdded.toLocaleString();
+        document.getElementById('lines-removed').textContent = totalRemoved.toLocaleString();
+    </script>
+</body>
+</html>
